@@ -1,0 +1,242 @@
+<!DOCTYPE html><html dir="rtl" lang="ar"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FATEKIT - الرئيسية</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "surface": "#fbf9f9",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#1b1b1b",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "surface-dim": "#dbdad9",
+                        "on-secondary-fixed-variant": "#4e453c",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "surface-variant": "#e3e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "outline-variant": "#cfc4c5",
+                        "outline": "#7e7576",
+                        "surface-container-high": "#e9e8e7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#000000",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary-container": "#6d6259",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-container-low": "#f5f3f3",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-container": "#efe0d4",
+                        "inverse-primary": "#c6c6c6",
+                        "on-secondary-fixed": "#211a13",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#efe0d4",
+                        "surface-bright": "#fbf9f9",
+                        "surface-container": "#efeded",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-container": "#848484",
+                        "on-primary-container": "#848484",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2c4b9",
+                        "on-surface-variant": "#4c4546",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#675d53"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["IBM Plex Sans Arabic"]
+                    },
+                    fontSize: {
+                        "label-sm": ["12px", { lineHeight: "1.4", fontWeight: "600" }],
+                        "headline-md": ["32px", { lineHeight: "1.3", fontWeight: "500" }],
+                        "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-lg": ["48px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "label-md": ["14px", { lineHeight: "1.4", letterSpacing: "0.05em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        .icon-thin {
+            font-variation-settings: 'wght' 100 !important;
+        }
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased flex flex-col min-h-screen">
+<!-- TopNavBar (Web) -->
+<nav class="hidden md:flex bg-primary text-on-primary border-b border-outline-variant docked full-width top-0 z-50">
+<div class="flex flex-row-reverse justify-between items-center px-margin-desktop py-6 w-full max-w-full mx-auto">
+<!-- Brand Logo -->
+<a class="font-display-lg text-display-lg tracking-widest text-on-primary" href="#">
+<img alt="FATEKIT" class="h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_kF5ZSXwlrUDWalbD-sch43GkuqeFTf5g9BlTsblibhLBI7nh7ISnM69-c19aonMFn1yx0zYX1EDnpURPkNgwK__L_2qrvhiPHes0zdf6RFWWyJsTh91h4zL21Lghi6O2WSaBBzdwJ9Kd279efYIfskHr8QDRxmHZMV1Zd_QhgR-3CK1k5sE5qcyD9J0eAsEv63_GXABRrjm_RyxTgi83xhBWGRRKPJFbFlz_-0-7OV5xRxngtcd-mVBd6G53QUlILB4">
+</a>
+<!-- Navigation Links -->
+<div class="flex gap-8 flex-row-reverse items-center font-label-md text-label-md">
+<a class="text-on-primary border-b-2 border-on-primary pb-1 scale-95 duration-200" href="#">الرئيسية</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">المكياج</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">الوجه</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">العيون</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">الشفاه</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">البشرة</a>
+</div>
+<!-- Trailing Icons -->
+<div class="flex gap-6 flex-row-reverse items-center">
+<button class="hover:text-on-primary transition-colors duration-300 scale-95 duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined icon-thin" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="hover:text-on-primary transition-colors duration-300 scale-95 duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined icon-thin" data-icon="favorite">favorite</span>
+</button>
+<button class="hover:text-on-primary transition-colors duration-300 scale-95 duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined icon-thin" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Mobile Header -->
+<header class="md:hidden flex justify-between items-center px-margin-mobile py-4 bg-primary text-on-primary border-b border-outline-variant sticky top-0 z-40">
+<a class="font-headline-md text-headline-md font-bold tracking-widest text-on-primary" href="#">
+<img alt="FATEKIT" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsG-JVRa9URHNcn2wDLoIE-G-hkKV_FoRMKZgRuayy_JPGU0sFqpyOuZCz0cFtsnr9xncVHKLFyMODV7tYB9jociWWKZ0cIXt9tqCA71YdxdQauDhK_AolQu_F2UDt7gW6Xgc_31UrMOXzBVvvZq_zBMcCIR5MkHatx3EZfe5pxRgLhJf-yUKbNN1Nh-KWP-OYGxYCrkxbxrMCbznW1O38AL_KnQ0FPBDSkKE8TrmTrtz2h1n_F5M8RXAtXnb98STVMGs">
+</a>
+<button class="flex items-center justify-center">
+<span class="material-symbols-outlined icon-thin" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pb-24 md:pb-0">
+<!-- Hero Section -->
+<section class="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full object-cover" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCZpEd2G31WT2bcELWrNB7t0s-ewl6CGfJHN3tQ_p4jBgsHmI8MWtFxKTJubaFLcjANlOY5IJdezWbDngLSiif4x7U43cWc4ZpO-04OtAhD2cPjyQShCFV2Dvo0T9faeBY1ejx14zmCk2DBgjQ7vM8-Xv5qLaxdgqIInPL6Bdp9O52MXuYN8xPBhJ3AO2qFYXXSL6a9NryUU0Hv3lZtUpy1MCe5Q7S5stBThgWKmf3dlYt759HunoGi-Q&quot;);"></div>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto flex flex-col items-center">
+<h1 class="font-display-lg text-display-lg text-on-primary mb-6 text-white drop-shadow-lg">اكتشفي جمالكِ بطريقتك</h1>
+<p class="font-body-lg text-body-lg text-on-primary mb-10 text-white/90 drop-shadow-md">مكياج فاخر مصمم ليمنحكِ إطلالة لا تُنسى</p>
+<a class="inline-flex items-center justify-center px-10 py-4 bg-primary text-on-primary font-label-sm text-label-sm tracking-wider uppercase hover:bg-surface-variant hover:text-on-surface-variant transition-colors border border-primary" href="#">
+                    تسوقي الآن
+                </a>
+</div>
+</section>
+<!-- Promo Banner -->
+<div class="bg-primary text-on-primary py-3 w-full text-center">
+<p class="font-label-sm text-label-sm tracking-wide">توصيل سريع • منتجات أصلية • تجربة تسوق فاخرة</p>
+</div>
+<!-- Featured Categories (Bento Grid) -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop">
+<div class="max-w-screen-xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-center mb-16 text-primary">تسوقي حسب الفئة</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter h-auto md:h-[600px]">
+<!-- Large Feature (Face) -->
+<a class="group relative block md:col-span-2 md:row-span-2 overflow-hidden bg-surface-container-low border border-outline-variant flex flex-col h-[300px] md:h-full" href="#">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDiqxzvJ2KeyZ8b3solMXE17KwmRiR7_EjGN3Wfiy7nqA4odc7Qo1JU3NfwrrOxBGaVU8jw7mzr0NaUgAn0VxBAmAWyAsIj0V-t3iWu0OBvIG5Q7LR9K9LVcQmMHfKdfcnlJ0xU4YdwbkeMZ7Rth2AqZqmP-5XQFQq1iGVgVacIapCukOBB59pOZBQ-1f0fsDyqNBYXI6Lugaqnj3eCL36pUBGRx-tJaGtKz25i3vq87m9Vbeun_9VrzQ&quot;);"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="relative z-10 p-8 flex-grow flex flex-col justify-end text-right">
+<h3 class="font-headline-md text-headline-md text-on-primary mb-2">الوجه</h3>
+<span class="font-label-sm text-label-sm text-on-primary/80 flex items-center gap-2 flex-row-reverse group-hover:gap-4 transition-all">
+                                اكتشفي المزيد <span class="material-symbols-outlined text-sm" data-icon="arrow_left_alt">arrow_left_alt</span>
+</span>
+</div>
+</a>
+<!-- Medium (Eyes) -->
+<a class="group relative block md:col-span-2 md:row-span-1 overflow-hidden bg-surface-container-low border border-outline-variant flex flex-col h-[250px] md:h-full" href="#">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAj11i6Vj8oHhq_OiuMHSWtdofEcHY4pJg8rbUwZopVlE18YYbgdbQ136gO-7X1ous3HeaYhr1Vr5MOWMUHmmWVX3b9hj2425ZKTjhOQ8vappZA2Gb8MTghBjb_XuMCe2spiY6LRi0t60UIhUPddNt3HFZInByhWK43FpAkOYK1XvRfqQpxOXnJ9oi6BY6FtZ--h8etSC15YY_VJdN3Q_hLNbjh-6EITNYXv4-w0WFlLZ__ZAJWfIgY0A&quot;);"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+<div class="relative z-10 p-6 flex-grow flex flex-col justify-end text-right text-on-primary drop-shadow-md">
+<h3 class="font-headline-md text-headline-md mb-1">العيون</h3>
+</div>
+</a>
+<!-- Small (Lips & Skin) -->
+<a class="group relative block md:col-span-1 md:row-span-1 overflow-hidden bg-surface-container-low border border-outline-variant flex flex-col h-[250px] md:h-full" href="#">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDGxJKLv4LojHrVpc0zwmJMu5DnmInYkCKjHcPKVZkJeNVUT8bu0TRr57n4AQPDvNK0WPsm_Aapr0-qc4BzWyNJq5mSQgi6sawLb04LBTXM3FqrbPnE3mMYQs1hGthK8lS1uowxBS7tJzbCCUVVYI3AeDx1QVMPH80lBqNp5rNvNvOPrwdzb6131NXkt6PZ9or-ROdXwGUgt1xYgVWeJH2uDK5Y1zh_wXmTBNas-2GEsd35lM2IKZQjvQ&quot;);"></div>
+<div class="absolute inset-0 bg-black/10"></div>
+<div class="relative z-10 p-6 flex-grow flex flex-col justify-end text-right text-on-primary drop-shadow-md">
+<h3 class="font-headline-md text-headline-md text-xl">الشفاه</h3>
+</div>
+</a>
+<a class="group relative block md:col-span-1 md:row-span-1 overflow-hidden bg-surface-container-low border border-outline-variant flex flex-col h-[250px] md:h-full" href="#">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCRzOBWaqmFfkmcO3XHJtj8yahYFtJzHPz6oOIMbVDRoAbf4heON0RGOcHoH_FMfO1E6NzedOKzDLksD5RC3h17uRg1IfKQdvM0wtU1E63jQXVGkf86YLjzy6baM991pPQxoktgRdVIYP3nYVKCOoFO3DK2gNFmavj_WYVXXL3PgtNOllrZ7ncpzZp0SDFmLJXf8ZXRHez9hyhw8UnHbKr2-Uv6T7_q8JutssUY3eIT_SDpXJZYTaL_yA&quot;);"></div>
+<div class="absolute inset-0 bg-black/10"></div>
+<div class="relative z-10 p-6 flex-grow flex flex-col justify-end text-right text-on-primary drop-shadow-md">
+<h3 class="font-headline-md text-headline-md text-xl">البشرة</h3>
+</div>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface border-t border-outline-variant h-16 flex flex-row-reverse justify-around items-center px-margin-mobile">
+<a class="flex flex-col items-center justify-center text-primary font-bold opacity-80 scale-95 transition-transform w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm-mobile text-label-sm-mobile text-[10px]">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="brush">brush</span>
+<span class="font-label-sm-mobile text-label-sm-mobile text-[10px]">المكياج</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-sm-mobile text-label-sm-mobile text-[10px]">الطلبات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="favorite">favorite</span>
+<span class="font-label-sm-mobile text-label-sm-mobile text-[10px]">المفضلة</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-sm-mobile text-label-sm-mobile text-[10px]">الحساب</span>
+</a>
+</nav>
+
+
+</body></html>

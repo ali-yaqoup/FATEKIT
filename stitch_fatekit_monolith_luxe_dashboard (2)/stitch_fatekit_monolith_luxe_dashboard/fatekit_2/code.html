@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FATEKIT - سلة المشتريات</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "surface": "#fbf9f9",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#1b1b1b",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "surface-dim": "#dbdad9",
+                        "on-secondary-fixed-variant": "#4e453c",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "surface-variant": "#e3e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "outline-variant": "#cfc4c5",
+                        "outline": "#7e7576",
+                        "surface-container-high": "#e9e8e7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#000000",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary-container": "#6d6259",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-container-low": "#f5f3f3",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-container": "#efe0d4",
+                        "inverse-primary": "#c6c6c6",
+                        "on-secondary-fixed": "#211a13",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#efe0d4",
+                        "surface-bright": "#fbf9f9",
+                        "surface-container": "#efeded",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-container": "#848484",
+                        "on-primary-container": "#848484",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2c4b9",
+                        "on-surface-variant": "#4c4546",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#675d53"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "label-sm": [
+                            "IBM Plex Sans Arabic"
+                        ],
+                        "headline-md": [
+                            "Playfair Display"
+                        ],
+                        "body-md": [
+                            "IBM Plex Sans Arabic"
+                        ],
+                        "headline-lg-mobile": [
+                            "Playfair Display"
+                        ],
+                        "body-lg": [
+                            "IBM Plex Sans Arabic"
+                        ],
+                        "display-lg": [
+                            "Playfair Display"
+                        ],
+                        "headline-lg": [
+                            "Playfair Display"
+                        ],
+                        "label-md": [
+                            "IBM Plex Sans Arabic"
+                        ]
+                    },
+                    "fontSize": {
+                        "label-sm": [
+                            "12px",
+                            {
+                                "lineHeight": "1.4",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "headline-md": [
+                            "32px",
+                            {
+                                "lineHeight": "1.3",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "headline-lg-mobile": [
+                            "32px",
+                            {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "body-lg": [
+                            "18px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "display-lg": [
+                            "64px",
+                            {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "headline-lg": [
+                            "48px",
+                            {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "label-md": [
+                            "14px",
+                            {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbf9f9;
+            color: #1b1c1c;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col antialiased">
+<!-- TopNavBar -->
+<nav class="hidden md:flex flex-row-reverse justify-between items-center px-margin-desktop py-6 w-full max-w-full mx-auto bg-primary text-on-primary docked full-width top-0 border-b border-outline-variant flat no shadows">
+<div class="flex items-center gap-6">
+<a class="text-on-primary border-b-2 border-on-primary pb-1 font-label-md text-label-md scale-95 duration-200" href="#">الرئيسية</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 font-label-md text-label-md scale-95 duration-200" href="#">المكياج</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 font-label-md text-label-md scale-95 duration-200" href="#">الوجه</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 font-label-md text-label-md scale-95 duration-200" href="#">العيون</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 font-label-md text-label-md scale-95 duration-200" href="#">الشفاه</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 font-label-md text-label-md scale-95 duration-200" href="#">البشرة</a>
+</div>
+<div class="font-display-lg text-display-lg tracking-widest text-on-primary">
+            FATEKIT
+        </div>
+<div class="flex items-center gap-4">
+<button class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-weight: 100;">search</span>
+</button>
+<button class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-weight: 100;">person</span>
+</button>
+<button class="text-on-primary hover:text-on-primary transition-colors duration-300 scale-95 duration-200 relative">
+<span class="material-symbols-outlined" style="font-weight: 100;">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-surface text-on-surface text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow px-margin-mobile md:px-margin-desktop py-12 max-w-7xl mx-auto w-full">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-12 text-center">سلة المشتريات</h1>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Cart Items -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Item 1 -->
+<div class="flex gap-6 border-b border-outline-variant pb-6">
+<div class="w-32 h-40 flex-shrink-0 bg-surface-variant relative overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A luxurious, minimalist close-up of a high-end foundation bottle. Soft, high-key lighting emphasizing the flawless texture and premium branding. Light-mode aesthetic with deep blacks and subtle skin-tone accents. Serene and elegant atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzMSjyX2sU3L1gPvMiUsUhyZT0XfGvHbRqqGZ7UWHsrmmqar18o6OGRamt4pIqnKZ8fL0VrrSjRrjlGyLdElitMOKKGuTWGcQLNmdCsfaXJJ_8yu4NtUWjMyejDqfW7j4TZcP9u9Mec5YK6mI070TmN34a_zgx0nK7IXxI3Tl3n3rAdjajXoTTGcBPnfYUvDY0j-zXXtua4VuzqdIT_7BrtIlXNxUohsxadVG_qHy8-l3EcQS6Pofrtg"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-md text-headline-md text-xl md:text-2xl">Luminous Foundation</h2>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-weight: 100;">close</span>
+</button>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="w-4 h-4 rounded-full bg-[#e8c0a8] border border-outline-variant"></span>
+<span class="font-body-md text-body-md text-on-surface-variant">Shade 03 - Warm Beige</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center border border-primary h-10 w-24">
+<button class="flex-1 flex items-center justify-center hover:bg-surface-variant transition-colors">-</button>
+<span class="flex-1 flex items-center justify-center font-label-md text-label-md">1</span>
+<button class="flex-1 flex items-center justify-center hover:bg-surface-variant transition-colors">+</button>
+</div>
+<div class="font-body-lg text-body-lg">₪ 250</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-6 border-b border-outline-variant pb-6">
+<div class="w-32 h-40 flex-shrink-0 bg-surface-variant relative overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A sleek, minimalist matte lipstick in a deep crimson shade, resting on a clean white surface. High-end editorial lighting, sharp focus on the product texture. Minimalist aesthetic, luxury beauty context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAx4QWNkRAONxWIgzEiLP1QLl80Mzf4QfsSbMNsGb3wfvTsvhCTjq5Iy_teBE01bxYFc0bC6R418p0G9ikIkA2uaiMD2gf266F3Ng5vURcwI3apsl0i49clYk3pXINUi5xPb0agJg-V4ax4-EoKnFYA-dvAjROKVqOlOzBIlRobDwcArm607wxzVXC8844lNpTQuJr72E66ylbVZzxla5FJkObtLm1SB2d95_ytPBL7a9lgZKftrhDAQ"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-md text-headline-md text-xl md:text-2xl">Velvet Matte Lipstick</h2>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-weight: 100;">close</span>
+</button>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="w-4 h-4 rounded-full bg-[#8b0000] border border-outline-variant"></span>
+<span class="font-body-md text-body-md text-on-surface-variant">Ruby Red</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center border border-primary h-10 w-24">
+<button class="flex-1 flex items-center justify-center hover:bg-surface-variant transition-colors">-</button>
+<span class="flex-1 flex items-center justify-center font-label-md text-label-md">1</span>
+<button class="flex-1 flex items-center justify-center hover:bg-surface-variant transition-colors">+</button>
+</div>
+<div class="font-body-lg text-body-lg">₪ 180</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container-lowest border border-outline-variant p-6 sticky top-32">
+<h3 class="font-headline-md text-headline-md text-2xl mb-6">ملخص الطلب</h3>
+<div class="flex flex-col gap-4 font-body-md text-body-md border-b border-outline-variant pb-6 mb-6">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">المجموع الفرعي</span>
+<span>₪ 430</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">الشحن</span>
+<span>₪ 30</span>
+</div>
+<div class="flex justify-between text-error">
+<span>الخصم</span>
+<span>- ₪ 0</span>
+</div>
+</div>
+<div class="flex justify-between items-end mb-8">
+<span class="font-headline-md text-headline-md text-xl">الإجمالي</span>
+<span class="font-headline-md text-headline-md text-3xl">₪ 460</span>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 font-label-sm text-label-sm hover:bg-surface-tint transition-colors duration-300">
+                        إتمام الطلب
+                    </button>
+<div class="mt-4 flex items-center justify-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+<span>الدفع عند الاستلام متاح</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex flex-row-reverse justify-around items-center h-16 px-margin-mobile bg-surface border-t border-outline-variant flat no shadows">
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm-mobile text-label-sm-mobile opacity-80 scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-weight: 100;">home</span>
+<span>الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm-mobile text-label-sm-mobile opacity-80 scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-weight: 100;">brush</span>
+<span>المكياج</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold font-label-sm-mobile text-label-sm-mobile opacity-80 scale-95 transition-transform relative" href="#">
+<span class="material-symbols-outlined" style="font-weight: 100; font-variation-settings: 'FILL' 1;">shopping_bag</span>
+<span>الطلبات</span>
+<span class="absolute -top-1 right-2 bg-primary text-on-primary text-[8px] w-3 h-3 rounded-full flex items-center justify-center font-bold">2</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm-mobile text-label-sm-mobile opacity-80 scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-weight: 100;">favorite</span>
+<span>المفضلة</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm-mobile text-label-sm-mobile opacity-80 scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-weight: 100;">person</span>
+<span>الحساب</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-section-gap flex flex-col items-center justify-center px-margin-desktop bg-surface border-t border-outline-variant flat no shadows pb-24 md:pb-section-gap">
+<div class="font-display-lg text-display-lg text-primary text-center mb-8">
+            FATEKIT
+        </div>
+<div class="flex flex-wrap justify-center gap-6 mb-8">
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">عن الماركة</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">خدمة العملاء</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">الشروط والأحكام</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">سياسة الخصوصية</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors" href="#">تواصل معنا</a>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">
+            © 2024 FATEKIT. جميع الحقوق محفوظة.
+        </div>
+</footer>
+</body></html>

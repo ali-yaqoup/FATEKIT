@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FATEKIT - Product Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "surface": "#fbf9f9",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#1b1b1b",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "surface-dim": "#dbdad9",
+                        "on-secondary-fixed-variant": "#4e453c",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "surface-variant": "#e3e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "outline-variant": "#cfc4c5",
+                        "outline": "#7e7576",
+                        "surface-container-high": "#e9e8e7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#000000",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary-container": "#6d6259",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-container-low": "#f5f3f3",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-container": "#efe0d4",
+                        "inverse-primary": "#c6c6c6",
+                        "on-secondary-fixed": "#211a13",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#efe0d4",
+                        "surface-bright": "#fbf9f9",
+                        "surface-container": "#efeded",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-container": "#848484",
+                        "on-primary-container": "#848484",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2c4b9",
+                        "on-surface-variant": "#4c4546",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#675d53"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["IBM Plex Sans Arabic"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .thin-border {
+            border: 1px solid #000000;
+        }
+        .thin-border-light {
+            border: 1px solid #e3e2e2;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="hidden md:flex flex-row-reverse justify-between items-center px-margin-desktop py-6 w-full max-w-full mx-auto bg-primary text-on-primary docked full-width top-0 border-b border-outline-variant flat no shadows z-50 sticky">
+<div class="flex items-center gap-6">
+<button aria-label="Search" class="hover:text-on-primary/70 transition-colors duration-300 scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</div>
+<div class="flex gap-8 items-center font-label-md text-label-md">
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">الرئيسية</a>
+<a class="text-on-primary border-b-2 border-on-primary pb-1 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">المكياج</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">الوجه</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">العيون</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">الشفاه</a>
+<a class="text-on-primary/70 hover:text-on-primary transition-colors duration-300 scale-95 duration-200" href="#">البشرة</a>
+</div>
+<div class="font-display-lg text-display-lg tracking-widest text-on-primary text-center absolute left-1/2 transform -translate-x-1/2 pointer-events-none">
+            FATEKIT
+        </div>
+<div class="flex gap-6 items-center">
+<button aria-label="User Profile" class="hover:text-on-primary transition-colors duration-300 scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button aria-label="Favorites" class="hover:text-on-primary transition-colors duration-300 scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button aria-label="Shopping Bag" class="hover:text-on-primary transition-colors duration-300 scale-95 duration-200 relative">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-12">
+<a class="hover:text-primary transition-colors" href="#">الرئيسية</a>
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+<a class="hover:text-primary transition-colors" href="#">المكياج</a>
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+<span class="text-primary">أحمر شفاه كلاسيكي</span>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-gutter">
+<!-- Left: Image Gallery (RTL reverses visually, but structurally we keep order and flex-row-reverse or grid placement) -->
+<div class="md:col-span-7 flex flex-col md:flex-row gap-4 h-[600px] md:h-[800px]">
+<!-- Thumbnails (Desktop) -->
+<div class="hidden md:flex flex-col gap-4 w-24 h-full overflow-y-auto pr-2 no-scrollbar">
+<button class="w-full aspect-[3/4] thin-border opacity-100 hover:opacity-80 transition-opacity">
+<img class="w-full h-full object-cover grayscale-0" data-alt="Close up of a luxury lipstick bullet in shade Nude, resting on a clean white minimalist background. The lighting is bright and editorial, emphasizing the sleek matte texture of the product." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnn0For5Tu_voEzyoe1NO41HMpHkErfUudlhBUhmMuc7fCxcwWurNJ0KeRiT3j_0ZJKg-QYzutEp5kufQZVgVOAD_6doiOPQypkqJXCscpYE4B2DQCUF8Bs68ErveXXTjzAiGzfbHkpwfHwzzYaH76zC--eq14gIAa5ouS6UmgZ7aFQ7mrX3tlXLcK1mrrHh1tucx84qbklvnfeoy1cpzYGkLv6gFKsgSSxAChRnEkph5vjJ4wGSyRFA"/>
+</button>
+<button class="w-full aspect-[3/4] thin-border-light opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover grayscale-0" data-alt="Model applying the luxury nude lipstick, soft natural lighting highlighting flawless skin and the subtle elegance of the shade. High-end beauty editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt-cL9yGfRc7gSCrXjWUTukt-nkAjuxLxFXqtrvriAeWwS5csE7o0Imsz6Hexbpk3nVDjVHEwFJYSrY_oasduEADR_FQMQqjt9OsU07dVjrt_Y8IJ4qbxjYCKkbS056bEoI7ImQNFGzIzqfazQkn8rkWc26LKmpw4wWXiAlOexkZfLg3N1Kw7Lpz5ZgMUUlZIdeot-x5tp5cQUA0t8PUvpCDuqGLJyB74AIpIcEPXCbUCXQ543G_VXgg"/>
+</button>
+<button class="w-full aspect-[3/4] thin-border-light opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover grayscale-0" data-alt="Swatch of the nude lipstick on a light skin tone arm, showing the creamy texture and opaque coverage. Minimalist white background, crisp lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAewe_jUug0NY6LWUyW5QHDwlSdP-09FH9nqvTCikUcii5wZYLwlWAJ557jcAxXnfyhMUXj8K60KThZMqdKSW0nd4sp1_7wkshn0P1SFra5nYfczCWXIDlTHDBbsRqumEkDLeiAhkj4y7GEnkhRoEZG7F_6WpWTCQ5rSHNdGFYmSrg1mjwffO97kocTnTeFzqfIQYWZu-VNcaO_RA_uhU1Rfw2yIoH53LvXjtbW4I8gnqHHIo1wA8-cAQ"/>
+</button>
+</div>
+<!-- Main Image -->
+<div class="flex-1 relative h-full thin-border bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="Large detailed product shot of a luxury lipstick tube, standing upright on a minimalist white surface. The packaging is sleek black with subtle branding. Crisp, high-end studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS5pOXEZMPUErLT1iF15B03tTXFqAHgNHjofF03rNmOvyGcJqy_Du4B8ztY0LJzvvZO7G2WdTkI8bPugx1mYa0kYTTpy7U3aQc-pMJ6lrqe-TzjI0poS7VZvRDo0JVnL-O7WRMlXOGdERkweg7uwW5GpMLxwi6H207Dk17yMjeIgW91vR3MTzqqsGbu1geJag6sTc4ez90RtSkV1Uy1Gv8kF9ppEhDcQTO03DzYf0ztaDSa7vzPYyw0g"/>
+<!-- Mobile Thumbnails Overlay -->
+<div class="md:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary-fixed-dim"></div>
+<div class="w-2 h-2 rounded-full bg-primary-fixed-dim"></div>
+</div>
+</div>
+</div>
+<!-- Right: Product Details -->
+<div class="md:col-span-5 flex flex-col justify-start pt-4 md:pt-12 md:pl-12">
+<!-- Title & Rating -->
+<div class="mb-6">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-2">أحمر شفاه كلاسيكي مات</h1>
+<div class="flex items-center gap-4">
+<div class="flex text-primary">
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="star_half">star_half</span>
+</div>
+<a class="text-on-surface-variant font-label-sm text-label-sm underline hover:text-primary transition-colors" href="#reviews">(128 تقييم)</a>
+</div>
+</div>
+<!-- Price -->
+<div class="mb-8">
+<span class="font-headline-md text-headline-md block">₪185</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block mt-1">شامل ضريبة القيمة المضافة</span>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant mb-10 leading-relaxed">
+                    أحمر شفاه بتركيبة كريمية غير لامعة، يمنحك تغطية كاملة ولوناً غنياً يدوم طويلاً دون التسبب في جفاف الشفاه. غني بزيت الجوجوبا للترطيب العميق.
+                </p>
+<!-- Shade Selector -->
+<div class="mb-10">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md">اللون: <span class="font-bold">Nude</span></span>
+</div>
+<div class="flex gap-4">
+<!-- Nude -->
+<button aria-label="Select Nude shade" class="w-10 h-10 rounded-full border-2 border-primary p-[2px] transition-transform hover:scale-110 focus:outline-none">
+<div class="w-full h-full rounded-full bg-[#d4b595]"></div>
+</button>
+<!-- Rose -->
+<button aria-label="Select Rose shade" class="w-10 h-10 rounded-full border border-outline-variant p-[2px] hover:border-primary transition-transform hover:scale-110 focus:outline-none">
+<div class="w-full h-full rounded-full bg-[#b85d6b]"></div>
+</button>
+<!-- Mocha -->
+<button aria-label="Select Mocha shade" class="w-10 h-10 rounded-full border border-outline-variant p-[2px] hover:border-primary transition-transform hover:scale-110 focus:outline-none">
+<div class="w-full h-full rounded-full bg-[#7a4b3a]"></div>
+</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-4 mb-12">
+<button class="w-full bg-primary text-on-primary py-4 font-label-sm text-label-sm hover:bg-surface-tint transition-colors uppercase tracking-widest flex items-center justify-center gap-2">
+<span>أضيفي إلى السلة</span>
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+</button>
+<button class="w-full bg-transparent text-primary py-4 font-label-sm text-label-sm thin-border hover:bg-surface-variant transition-colors uppercase tracking-widest">
+                        اشتري الآن
+                    </button>
+</div>
+<!-- COD Badge -->
+<div class="flex items-center gap-3 p-4 bg-surface-container-low thin-border-light mb-12">
+<span class="material-symbols-outlined text-primary" data-icon="local_shipping">local_shipping</span>
+<span class="font-label-sm text-label-sm text-on-surface">الدفع عند الاستلام متوفر (COD)</span>
+</div>
+<!-- Accordions -->
+<div class="border-t border-outline-variant">
+<div class="accordion-item border-b border-outline-variant">
+<button class="w-full py-6 flex justify-between items-center text-right hover:text-primary-fixed-dim transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-label-md text-label-md">التفاصيل والمكونات</span>
+<span class="material-symbols-outlined accordion-icon">expand_more</span>
+</button>
+<div class="accordion-content font-body-md text-body-md text-on-surface-variant">
+<p class="mb-4">تركيبة غنية تمنحك لوناً كثيفاً بلمسة نهائية مخملية غير لامعة. مصمم ليناسب جميع ألوان البشرة ويوفر راحة طوال اليوم.</p>
+<ul class="list-disc list-inside space-y-2">
+<li>زيت الجوجوبا لترطيب الشفاه</li>
+<li>فيتامين E للحماية من العوامل البيئية</li>
+<li>خالي من البارابين والعطور</li>
+</ul>
+</div>
+</div>
+<div class="accordion-item border-b border-outline-variant">
+<button class="w-full py-6 flex justify-between items-center text-right hover:text-primary-fixed-dim transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-label-md text-label-md">التوصيل والاسترجاع</span>
+<span class="material-symbols-outlined accordion-icon">expand_more</span>
+</button>
+<div class="accordion-content font-body-md text-body-md text-on-surface-variant">
+<p class="mb-2"><strong>التوصيل:</strong> توصيل قياسي خلال 2-4 أيام عمل. توصيل مجاني للطلبات فوق 300 شيكل.</p>
+<p><strong>الاسترجاع:</strong> يمكنك إرجاع المنتجات غير المستخدمة في حالتها الأصلية خلال 14 يوماً من تاريخ الاستلام.</p>
+</div>
+</div>
+<div class="accordion-item border-b border-outline-variant">
+<button class="w-full py-6 flex justify-between items-center text-right hover:text-primary-fixed-dim transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-label-md text-label-md">طريقة الاستخدام</span>
+<span class="material-symbols-outlined accordion-icon">expand_more</span>
+</button>
+<div class="accordion-content font-body-md text-body-md text-on-surface-variant">
+<p>حددي شفتيك باستخدام محدد الشفاه أولاً، ثم املئيها بأحمر الشفاه بدءاً من المنتصف وصولاً إلى الزوايا الخارجية للحصول على مظهر ممتلئ ومثالي.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden flex flex-row-reverse justify-around items-center h-16 px-margin-mobile bg-surface text-on-surface fixed bottom-0 w-full z-50 border-t border-outline-variant flat no shadows">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform hover:opacity-100" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold opacity-100 scale-100 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="brush" data-weight="fill" style="font-variation-settings: 'FILL' 1;">brush</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">المكياج</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform hover:opacity-100" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">الطلبات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform hover:opacity-100" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="favorite">favorite</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">المفضلة</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-80 scale-95 transition-transform hover:opacity-100" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">الحساب</span>
+</a>
+</nav>
+<!-- Spacer for Mobile Bottom Nav -->
+<div class="h-16 md:hidden"></div>
+</body></html>

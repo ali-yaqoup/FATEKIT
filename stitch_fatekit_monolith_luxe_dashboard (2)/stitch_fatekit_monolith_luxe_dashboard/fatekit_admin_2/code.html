@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FATEKIT - إضافة منتج</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Guidelines -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "surface": "#fbf9f9",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#1b1b1b",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "surface-dim": "#dbdad9",
+                        "on-secondary-fixed-variant": "#4e453c",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "surface-variant": "#e3e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "outline-variant": "#cfc4c5",
+                        "outline": "#7e7576",
+                        "surface-container-high": "#e9e8e7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#000000",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary-container": "#6d6259",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-container-low": "#f5f3f3",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-container": "#efe0d4",
+                        "inverse-primary": "#c6c6c6",
+                        "on-secondary-fixed": "#211a13",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#efe0d4",
+                        "surface-bright": "#fbf9f9",
+                        "surface-container": "#efeded",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-container": "#848484",
+                        "on-primary-container": "#848484",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2c4b9",
+                        "on-surface-variant": "#4c4546",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#675d53"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["IBM Plex Sans Arabic"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .luxury-input {
+            border: none;
+            border-bottom: 1px solid theme('colors.outline-variant');
+            border-radius: 0;
+            background: transparent;
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .luxury-input:focus {
+            box-shadow: none;
+            border-color: theme('colors.primary');
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background flex min-h-screen">
+<!-- SideNavBar (Admin Shell) -->
+<nav class="hidden md:flex flex-col h-screen py-8 bg-primary dark:bg-primary fixed right-0 top-0 w-64 border-l border-outline-variant z-40 transition-all duration-200 ease-in-out">
+<!-- Header -->
+<div class="px-6 mb-10 flex flex-col items-center">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary mb-1">FATEKIT</h1>
+<p class="font-label-sm text-label-sm text-on-primary/60 tracking-widest uppercase">ADMIN PORTAL</p>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 overflow-y-auto w-full">
+<ul class="flex flex-col w-full font-label-md text-label-md">
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">dashboard</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">لوحة القيادة</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">shopping_cart</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">الطلبات</span>
+</a>
+</li>
+<!-- Active Navigation: Products -->
+<li>
+<a class="bg-tertiary-container text-on-tertiary-container flex items-center gap-3 px-6 py-4 rounded-none w-full border-r-4 border-on-tertiary-container" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 400">inventory_2</span>
+<span>المنتجات</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">view_quilt</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">إدارة الصفحة الرئيسية</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">category</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">إدارة التصنيفات</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">group</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">العملاء</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">inventory</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">المخزون</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">local_offer</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">العروض</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">analytics</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">التقارير</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-4 hover:bg-surface-variant/10 transition-colors duration-200 w-full group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300">settings</span>
+<span class="group-hover:text-on-primary transition-colors duration-300">الإعدادات</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- CTA & User Profile -->
+<div class="px-6 mt-auto flex flex-col gap-4 w-full">
+<button class="w-full border border-on-primary/30 text-on-primary py-2 px-4 hover:bg-surface-variant/10 transition-colors duration-200 font-label-md text-label-md">
+                عرض المتجر
+            </button>
+<div class="flex items-center gap-3 pt-4 border-t border-on-primary/20">
+<div class="w-8 h-8 rounded-full bg-surface-variant/20 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-on-primary text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-primary">المدير</span>
+<span class="font-label-sm text-[10px] text-on-primary/50">admin@fatekit.com</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 mr-0 md:mr-64 w-full">
+<!-- Mobile Header (Hidden on Desktop) -->
+<header class="md:hidden flex items-center justify-between px-margin-mobile py-4 bg-primary text-on-primary sticky top-0 z-30">
+<h1 class="font-headline-md text-2xl font-bold">FATEKIT</h1>
+<button class="material-symbols-outlined">menu</button>
+</header>
+<!-- Canvas -->
+<div class="px-margin-mobile md:px-margin-desktop py-12 max-w-[1200px] mx-auto">
+<!-- Page Title -->
+<div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-outline-variant pb-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">إضافة منتج جديد</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">أدخل تفاصيل المنتج للإدراج في الكتالوج.</p>
+</div>
+<div class="flex gap-4">
+<button class="border border-primary text-primary px-6 py-3 font-label-md text-label-md hover:bg-surface-variant transition-colors">
+                        إلغاء
+                    </button>
+<button class="bg-primary text-on-primary px-8 py-3 font-label-md text-label-md hover:bg-inverse-surface transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">save</span>
+                        حفظ المنتج
+                    </button>
+</div>
+</div>
+<!-- Form Layout (Bento Grid Style) -->
+<form class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column (Main Info - 8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Basic Info -->
+<section class="bg-surface p-6 md:p-8 border border-outline-variant rounded-sm">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-6">المعلومات الأساسية</h3>
+<div class="space-y-6">
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2" for="productName">اسم المنتج *</label>
+<input class="luxury-input font-body-md text-body-md text-primary w-full pb-2 focus:ring-0" id="productName" placeholder="مثال: أحمر شفاه مخملي مطفي" type="text"/>
+</div>
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2" for="productDesc">وصف المنتج</label>
+<textarea class="luxury-input font-body-md text-body-md text-primary w-full pb-2 focus:ring-0 resize-none" id="productDesc" placeholder="وصف تفصيلي للمنتج، التركيبة، وطريقة الاستخدام..." rows="4"></textarea>
+</div>
+</div>
+</section>
+<!-- Media / Images -->
+<section class="bg-surface p-6 md:p-8 border border-outline-variant rounded-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-widest">الوسائط والصور</h3>
+<span class="font-label-sm text-[11px] text-on-surface-variant">الحد الأقصى 5 صور</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Main Upload Area -->
+<div class="col-span-2 md:col-span-4 border-2 border-dashed border-outline-variant bg-surface-container-low h-48 flex flex-col items-center justify-center cursor-pointer hover:bg-surface-variant transition-colors group relative overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary mb-2 transition-colors">cloud_upload</span>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">اسحب وأفلت الصور هنا</span>
+<span class="font-label-sm text-[10px] text-outline-variant mt-1">PNG, JPG, WEBP حتى 2MB</span>
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple="" type="file"/>
+</div>
+<!-- Image Thumbnails Placeholders -->
+<div class="aspect-square bg-surface-variant flex items-center justify-center relative group">
+<div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+<button class="text-on-primary hover:scale-110 transition-transform" type="button"><span class="material-symbols-outlined text-sm">visibility</span></button>
+<button class="text-error hover:scale-110 transition-transform" type="button"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+<span class="material-symbols-outlined text-outline">image</span>
+</div>
+<div class="aspect-square bg-surface-variant flex items-center justify-center border border-dashed border-outline-variant text-outline-variant hover:text-primary hover:border-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</section>
+<!-- Variants & Shades Table -->
+<section class="bg-surface border border-outline-variant rounded-sm">
+<div class="p-6 md:p-8 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-widest">المتغيرات والدرجات</h3>
+<button class="text-primary font-label-sm text-label-sm underline hover:text-outline transition-colors" type="button">إضافة درجة جديدة</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse min-w-[600px]">
+<thead class="bg-surface-container-low">
+<tr class="border-b border-outline-variant">
+<th class="py-4 px-6 font-label-sm text-label-sm text-on-surface-variant font-normal w-12">#</th>
+<th class="py-4 px-6 font-label-sm text-label-sm text-on-surface-variant font-normal">اسم الدرجة / المتغير</th>
+<th class="py-4 px-6 font-label-sm text-label-sm text-on-surface-variant font-normal">اللون</th>
+<th class="py-4 px-6 font-label-sm text-label-sm text-on-surface-variant font-normal">السعر (₪)</th>
+<th class="py-4 px-6 font-label-sm text-label-sm text-on-surface-variant font-normal">المخزون</th>
+<th class="py-4 px-6 font-label-sm text-label-sm text-on-surface-variant font-normal text-center">إجراء</th>
+</tr>
+</thead>
+<tbody>
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 font-body-md text-sm text-outline-variant">1</td>
+<td class="py-4 px-6">
+<input class="bg-transparent border-b border-transparent focus:border-primary outline-none w-full font-body-md text-sm text-primary" type="text" value="Ruby Red"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full border border-outline-variant bg-[#9b111e] cursor-pointer ring-1 ring-offset-1 ring-transparent hover:ring-primary transition-all"></div>
+<span class="font-label-sm text-[10px] text-outline-variant uppercase">#9B111E</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<input class="bg-transparent border-b border-transparent focus:border-primary outline-none w-20 font-body-md text-sm text-primary" type="number" value="120"/>
+</td>
+<td class="py-4 px-6">
+<input class="bg-transparent border-b border-transparent focus:border-primary outline-none w-20 font-body-md text-sm text-primary" type="number" value="45"/>
+</td>
+<td class="py-4 px-6 text-center">
+<button class="text-outline hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-sm">delete</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 font-body-md text-sm text-outline-variant">2</td>
+<td class="py-4 px-6">
+<input class="bg-transparent border-b border-transparent focus:border-primary outline-none w-full font-body-md text-sm text-primary" type="text" value="Nude Blush"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full border border-outline-variant bg-[#d4a39b] cursor-pointer ring-1 ring-offset-1 ring-transparent hover:ring-primary transition-all"></div>
+<span class="font-label-sm text-[10px] text-outline-variant uppercase">#D4A39B</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<input class="bg-transparent border-b border-transparent focus:border-primary outline-none w-20 font-body-md text-sm text-primary" type="number" value="120"/>
+</td>
+<td class="py-4 px-6">
+<input class="bg-transparent border-b border-transparent focus:border-primary outline-none w-20 font-body-md text-sm text-error" type="number" value="0"/>
+</td>
+<td class="py-4 px-6 text-center">
+<button class="text-outline hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-sm">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Right Column (Sidebar Settings - 4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-8">
+<!-- Organization / Categories -->
+<section class="bg-surface p-6 border border-outline-variant rounded-sm">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-6">التصنيف والتنظيم</h3>
+<div class="space-y-6">
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2">الفئة الرئيسية</label>
+<div class="relative">
+<select class="luxury-input font-body-md text-body-md text-primary w-full pb-2 appearance-none focus:ring-0 bg-transparent cursor-pointer">
+<option disabled="" selected="" value="">اختر الفئة الرئيسية</option>
+<option selected="" value="lips">الشفاه</option>
+<option value="face">الوجه</option>
+<option value="eyes">العيون</option>
+<option value="skincare">البشرة</option>
+</select>
+<span class="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2">الفئة الفرعية</label>
+<div class="relative">
+<select class="luxury-input font-body-md text-body-md text-primary w-full pb-2 appearance-none focus:ring-0 bg-transparent cursor-pointer">
+<option disabled="" selected="" value="">اختر الفئة الفرعية</option>
+<option selected="" value="lipstick">أحمر الشفاه</option>
+<option value="lipgloss">ملمع الشفاه</option>
+<option value="lipliner">محدد الشفاه</option>
+</select>
+<span class="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2" for="productTags">العلامات (Tags)</label>
+<input class="luxury-input font-body-md text-body-md text-primary w-full pb-2 focus:ring-0" id="productTags" placeholder="مفصولة بفاصلة..." type="text"/>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="border border-outline-variant px-3 py-1 font-label-sm text-[10px] text-primary rounded-full flex items-center gap-1">
+                                        مطفي <button class="text-outline hover:text-primary" type="button"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</span>
+<span class="border border-outline-variant px-3 py-1 font-label-sm text-[10px] text-primary rounded-full flex items-center gap-1">
+                                        طويل الأمد <button class="text-outline hover:text-primary" type="button"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing & Stock (Global) -->
+<section class="bg-surface p-6 border border-outline-variant rounded-sm">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-6">السعر والمخزون الأساسي</h3>
+<div class="space-y-6">
+<div class="flex flex-col relative">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2" for="basePrice">السعر الأساسي</label>
+<div class="relative flex items-center border-b border-outline-variant focus-within:border-primary transition-colors">
+<span class="font-label-md text-primary pl-2 font-bold">₪</span>
+<input class="border-none bg-transparent w-full pb-2 pt-2 focus:ring-0 font-body-md text-body-md text-primary text-left" dir="ltr" id="basePrice" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2" for="sku">SKU</label>
+<input class="luxury-input font-body-md text-body-md text-primary w-full pb-2 focus:ring-0 font-mono text-sm" dir="ltr" id="sku" placeholder="FAT-LIP-001" type="text"/>
+</div>
+<div class="flex flex-col">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-2" for="globalQty">الكمية الإجمالية</label>
+<input class="luxury-input font-body-md text-body-md text-primary w-full pb-2 focus:ring-0 text-left" dir="ltr" id="globalQty" placeholder="0" type="number"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Visibility & Status -->
+<section class="bg-surface p-6 border border-outline-variant rounded-sm">
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-6">الظهور والحالة</h3>
+<div class="space-y-4">
+<!-- Toggle 1 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="font-label-sm text-label-sm text-primary group-hover:text-outline transition-colors">نشر المنتج (مرئي)</span>
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<!-- Toggle 2 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="font-label-sm text-label-sm text-primary group-hover:text-outline transition-colors">تمييز كـ "منتج مميز" (Featured)</span>
+<div class="relative">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<!-- Toggle 3 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="font-label-sm text-label-sm text-primary group-hover:text-outline transition-colors">علامة "وصل حديثاً" (New)</span>
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Sticky Bottom Action Bar (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant p-4 z-50 flex gap-4">
+<button class="flex-1 border border-primary text-primary py-3 font-label-md text-label-md text-center">إلغاء</button>
+<button class="flex-[2] bg-primary text-on-primary py-3 font-label-md text-label-md text-center">حفظ المنتج</button>
+</div>
+</form>
+</div>
+</main>
+</body></html>

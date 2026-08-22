@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Products List - FATEKIT Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "surface": "#fbf9f9",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#1b1b1b",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1c1c",
+                        "surface-dim": "#dbdad9",
+                        "on-secondary-fixed-variant": "#4e453c",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "surface-variant": "#e3e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "outline-variant": "#cfc4c5",
+                        "outline": "#7e7576",
+                        "surface-container-high": "#e9e8e7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#000000",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary-container": "#6d6259",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-container-low": "#f5f3f3",
+                        "background": "#fbf9f9",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-container": "#efe0d4",
+                        "inverse-primary": "#c6c6c6",
+                        "on-secondary-fixed": "#211a13",
+                        "on-primary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#efe0d4",
+                        "surface-bright": "#fbf9f9",
+                        "surface-container": "#efeded",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-container": "#848484",
+                        "on-primary-container": "#848484",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2c4b9",
+                        "on-surface-variant": "#4c4546",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#675d53"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["IBM Plex Sans Arabic"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'IBM Plex Sans Arabic', sans-serif; background-color: #fbf9f9; color: #1b1c1c; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .table-row-hover:hover { background-color: #f5f3f3; }
+    </style>
+</head>
+<body class="flex min-h-screen bg-background text-on-background overflow-x-hidden">
+<!-- SideNavBar (Admin Shell) -->
+<aside class="hidden md:flex flex-col h-screen py-8 fixed right-0 top-0 w-64 bg-primary text-on-primary border-l border-outline-variant z-50">
+<div class="px-6 mb-8 text-center">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">FATEKIT</h1>
+<p class="font-label-md text-label-md text-on-primary/70 tracking-widest mt-2 uppercase">ADMIN PORTAL</p>
+</div>
+<nav class="flex-1 overflow-y-auto w-full">
+<ul class="flex flex-col gap-1 w-full">
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+                        لوحة القيادة
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_cart</span>
+                        الطلبات
+                    </a>
+</li>
+<li>
+<a class="bg-tertiary-container text-on-tertiary-container flex items-center gap-3 px-6 py-3 rounded-none transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+                        المنتجات
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">view_quilt</span>
+                        إدارة الصفحة الرئيسية
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">category</span>
+                        إدارة التصنيفات
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+                        العملاء
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory</span>
+                        المخزون
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_offer</span>
+                        العروض
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+                        التقارير
+                    </a>
+</li>
+<li>
+<a class="text-on-primary/60 flex items-center gap-3 px-6 py-3 hover:bg-surface-variant/10 transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                        الإعدادات
+                    </a>
+</li>
+</ul>
+</nav>
+<div class="px-6 mt-auto pt-6 border-t border-outline-variant/30 w-full flex justify-center">
+<button class="font-label-md text-label-md bg-surface text-primary px-6 py-2 border border-primary hover:bg-primary-fixed transition-colors duration-300 w-full">
+                عرض المتجر
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:mr-64 p-margin-mobile md:p-margin-desktop bg-background min-h-screen">
+<!-- Header & Top Actions -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6 border-b border-outline-variant pb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">المنتجات</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">إدارة وتحديث كتالوج المنتجات الفاخرة الخاص بك.</p>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-8 py-3 flex items-center gap-2 hover:bg-surface-tint transition-colors duration-300 shadow-none border border-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add</span>
+                إضافة منتج
+            </button>
+</header>
+<!-- Search & Filters -->
+<section class="mb-10 flex flex-col md:flex-row gap-4 justify-between items-center bg-surface-container-low p-6 border border-outline-variant">
+<div class="relative w-full md:w-1/3">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 pl-4 pr-10 py-2 font-body-md text-body-md text-on-surface placeholder:text-outline transition-colors rounded-none" placeholder="البحث عن منتج..." type="text"/>
+</div>
+<div class="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+<!-- Category Filter -->
+<div class="relative min-w-[150px]">
+<select class="w-full appearance-none bg-transparent border border-outline-variant px-4 py-2 pr-10 font-label-sm text-label-sm text-on-surface focus:border-primary focus:ring-0 rounded-none cursor-pointer">
+<option value="">كل التصنيفات</option>
+<option value="face">الوجه</option>
+<option value="lips">الشفاه</option>
+<option value="eyes">العيون</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-sm">expand_more</span>
+</div>
+<!-- Stock Filter -->
+<div class="relative min-w-[150px]">
+<select class="w-full appearance-none bg-transparent border border-outline-variant px-4 py-2 pr-10 font-label-sm text-label-sm text-on-surface focus:border-primary focus:ring-0 rounded-none cursor-pointer">
+<option value="">حالة المخزون</option>
+<option value="in_stock">متوفر</option>
+<option value="low_stock">منخفض</option>
+<option value="out_of_stock">نفذ</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-sm">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative min-w-[150px]">
+<select class="w-full appearance-none bg-transparent border border-outline-variant px-4 py-2 pr-10 font-label-sm text-label-sm text-on-surface focus:border-primary focus:ring-0 rounded-none cursor-pointer">
+<option value="">حالة المنتج</option>
+<option value="active">نشط</option>
+<option value="draft">مسودة</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+</section>
+<!-- Products Table -->
+<div class="overflow-x-auto bg-surface border border-outline-variant">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low">
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider w-16 text-center">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary" type="checkbox"/>
+</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider">المنتج</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider">التصنيف</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider">السعر</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider">المخزون</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider">الحالة</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-variant font-normal uppercase tracking-wider text-center">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Product Row 1 -->
+<tr class="table-row-hover transition-colors duration-150">
+<td class="p-4 text-center">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 bg-surface-variant border border-outline-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up product shot of a luxury matte red lipstick in a sleek minimalist black casing, placed on a clean white surface with sharp studio lighting, high fashion editorial style photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRmkHWrtM6Y-qvieO3XY-HcNDBuBRhMkkQuXICI3GVJekpvI_agC2aucuS3FD2sqh5T5oGuuLDxeWt2KLQG50dQl5tPVUs6BQ1Zr7olh17BP_4JMnbqnz7UsPpaXNafmRx2k88p97A4E6JR6MOnVasX4Mu8V1xEmv3G_IzmPqR7WQbkWtjeiEyL9l6_79-Yg4-aOlFKI75tFVKt19i_b3MgDIyqjaPF5Kcrjs9BXV_zJpV0aH4dCIP2A"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">أحمر شفاه غير لامع فائق</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">LIP-MATTE-01</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 border border-outline-variant text-on-surface font-label-sm text-label-sm">
+                                الشفاه <span class="mx-1 text-outline">&gt;</span> أحمر الشفاه
+                            </span>
+</td>
+<td class="p-4 font-body-md text-body-md text-on-surface">₪180</td>
+<td class="p-4">
+<div class="font-body-md text-body-md text-on-surface">145</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">متوفر</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+                                نشط
+                            </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-outline hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">edit</span>
+</button>
+<button class="text-outline hover:text-error transition-colors p-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">delete</span>
+</button>
+</td>
+</tr>
+<!-- Product Row 2 -->
+<tr class="table-row-hover transition-colors duration-150">
+<td class="p-4 text-center">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 bg-surface-variant border border-outline-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist glass bottle of liquid foundation with a black pump, sitting on a clear acrylic block against a pristine white background. High-key lighting, luxurious and clean beauty aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByY7SKNbeRSd2EU0W9aG8zpMjWUFmoUnZl_BjoJKiIU2f70zfii3CN6bpi5ciPNwfFzkHRAmk5TMv3S3Bqc0Hb8_BLIhzwIFOtylZ_H2Uu-E6WBz8uhPMDuft8gbWvhnz-U4IpveljtyDunG1YOVVt0u6Aqt5HwHerbsVcQba5bu1csvrUqTg4jBMSKp5v8bl6mwG8FEIvGl08GVSrPpuiYyjdqzokIV7XHzmVTtogpZC5En3e1KAKIg"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">كريم أساس سائل ناعم</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">FACE-FDN-05</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 border border-outline-variant text-on-surface font-label-sm text-label-sm">
+                                الوجه <span class="mx-1 text-outline">&gt;</span> كريم أساس
+                            </span>
+</td>
+<td class="p-4 font-body-md text-body-md text-on-surface">₪250</td>
+<td class="p-4">
+<div class="font-body-md text-body-md text-on-surface">12</div>
+<div class="font-label-sm text-label-sm text-outline">منخفض</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+                                نشط / مميز
+                            </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-outline hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">edit</span>
+</button>
+<button class="text-outline hover:text-error transition-colors p-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">delete</span>
+</button>
+</td>
+</tr>
+<!-- Product Row 3 -->
+<tr class="table-row-hover transition-colors duration-150 opacity-60">
+<td class="p-4 text-center">
+<input class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-none focus:ring-primary" disabled="" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 bg-surface-variant border border-outline-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover grayscale" data-alt="An open eyeshadow palette featuring neutral and smoky tones in sleek black minimalist packaging, photographed from top-down on a light grey textured stone surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1aWUHkq8moN-5VJCNFnPcc-PekNLxxUs92qBnsjv2FshP02siRda_ypjdSniKzxLa2p7h64sJf0diMhLc83nMWzqEzyrSN8R9yxJzXy7bweCx5XiX_XaWBoqZU9m--4CFg_U2v2CcKCy-SxfJGanH3hlCNrWpg8CctWYQy-S01C-QcXgMri_E2ITWX8BLAi_gjxo8coHti-lPVXJ2IdJdZffwdkzdIvwBn_Fcd6gaBZgTJypxJYHCiQ"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">لوحة ظلال عيون سموكي</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">EYE-PAL-02</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 border border-outline-variant text-on-surface font-label-sm text-label-sm">
+                                العيون <span class="mx-1 text-outline">&gt;</span> ظلال العيون
+                            </span>
+</td>
+<td class="p-4 font-body-md text-body-md text-on-surface">₪320</td>
+<td class="p-4">
+<div class="font-body-md text-body-md text-on-surface">0</div>
+<div class="font-label-sm text-label-sm text-error">نفذ المخزون</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2 h-2 border border-outline rounded-full"></span>
+                                غير نشط
+                            </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-outline hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex justify-between items-center mt-8 border-t border-outline-variant pt-6">
+<span class="font-label-sm text-label-sm text-on-surface-variant">يعرض 1-3 من 24 منتج</span>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant hover:bg-surface-container transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm border border-primary">1</button>
+<button class="px-3 py-1 bg-transparent text-on-surface hover:bg-surface-container font-label-sm text-label-sm border border-transparent">2</button>
+<button class="px-3 py-1 bg-transparent text-on-surface hover:bg-surface-container font-label-sm text-label-sm border border-transparent">3</button>
+<span class="px-2 py-1 text-on-surface-variant">...</span>
+<button class="p-2 border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+</div>
+</div>
+</main>
+</body></html>

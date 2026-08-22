@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FATEKIT - إتمام الطلب</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#e2e2e2",
+                      "on-error": "#ffffff",
+                      "surface": "#fbf9f9",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#1b1b1b",
+                      "on-surface": "#1b1c1c",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#1b1c1c",
+                      "surface-dim": "#dbdad9",
+                      "on-secondary-fixed-variant": "#4e453c",
+                      "error": "#ba1a1a",
+                      "primary": "#000000",
+                      "surface-variant": "#e3e2e2",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "outline-variant": "#cfc4c5",
+                      "outline": "#7e7576",
+                      "surface-container-high": "#e9e8e7",
+                      "tertiary-fixed": "#e2e2e2",
+                      "tertiary": "#000000",
+                      "on-primary-fixed-variant": "#474747",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "on-secondary-container": "#6d6259",
+                      "inverse-on-surface": "#f2f0f0",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "surface-container-low": "#f5f3f3",
+                      "background": "#fbf9f9",
+                      "inverse-surface": "#303031",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "secondary-container": "#efe0d4",
+                      "inverse-primary": "#c6c6c6",
+                      "on-secondary-fixed": "#211a13",
+                      "on-primary-fixed": "#1b1b1b",
+                      "secondary-fixed": "#efe0d4",
+                      "surface-bright": "#fbf9f9",
+                      "surface-container": "#efeded",
+                      "on-error-container": "#93000a",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#1b1b1b",
+                      "on-tertiary-container": "#848484",
+                      "on-primary-container": "#848484",
+                      "surface-container-highest": "#e3e2e2",
+                      "on-secondary": "#ffffff",
+                      "secondary-fixed-dim": "#d2c4b9",
+                      "on-surface-variant": "#4c4546",
+                      "surface-tint": "#5e5e5e",
+                      "secondary": "#675d53"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "80px",
+                      "section-gap": "120px"
+              },
+              "fontFamily": {
+                      "label-sm": [
+                              "IBM Plex Sans Arabic"
+                      ],
+                      "headline-md": [
+                              "Playfair Display"
+                      ],
+                      "body-md": [
+                              "IBM Plex Sans Arabic"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "body-lg": [
+                              "IBM Plex Sans Arabic"
+                      ],
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "label-md": [
+                              "IBM Plex Sans Arabic"
+                      ]
+              },
+              "fontSize": {
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .thin-border {
+            border: 1px solid #000000;
+        }
+        .thin-border-bottom {
+            border-bottom: 1px solid #000000;
+        }
+        .input-minimal {
+            border: none;
+            border-bottom: 1px solid #000000;
+            border-radius: 0;
+            padding-left: 0;
+            padding-right: 0;
+            background-color: transparent;
+        }
+        .input-minimal:focus {
+            outline: none;
+            box-shadow: none;
+            border-bottom-width: 2px;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- Minimal Header for Checkout (Distraction Free) -->
+<header class="w-full py-6 px-margin-mobile md:px-margin-desktop border-b border-outline-variant flex justify-center items-center bg-surface sticky top-0 z-50">
+<a class="font-display-lg text-display-lg tracking-widest text-primary hover:opacity-80 transition-opacity" href="#">FATEKIT</a>
+</header>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
+<div class="mb-12">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-center md:text-right mb-2">إتمام الطلب</h1>
+<p class="text-on-surface-variant text-center md:text-right">يرجى إدخال تفاصيل الشحن والدفع لإتمام عملية الشراء.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+<!-- Left Column: Checkout Forms (RTL so this is on the right visually) -->
+<div class="lg:col-span-7 space-y-16">
+<!-- Customer Info -->
+<section>
+<h2 class="font-headline-md text-headline-md mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined font-light text-2xl">person</span>
+                        معلومات العميل
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="firstName">الاسم الأول</label>
+<input class="input-minimal w-full py-2 font-body-md" id="firstName" placeholder="أدخل الاسم الأول" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="lastName">اسم العائلة</label>
+<input class="input-minimal w-full py-2 font-body-md" id="lastName" placeholder="أدخل اسم العائلة" type="text"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="email">البريد الإلكتروني</label>
+<input class="input-minimal w-full py-2 font-body-md" id="email" placeholder="example@domain.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="phone">رقم الهاتف</label>
+<input class="input-minimal w-full py-2 font-body-md" id="phone" placeholder="05x-xxxxxxx" type="tel"/>
+</div>
+</div>
+</section>
+<hr class="border-outline-variant"/>
+<!-- Shipping Address -->
+<section>
+<h2 class="font-headline-md text-headline-md mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined font-light text-2xl">local_shipping</span>
+                        عنوان الشحن
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="address">العنوان (الشارع، رقم المبنى، الشقة)</label>
+<input class="input-minimal w-full py-2 font-body-md" id="address" placeholder="أدخل عنوان الشحن بالتفصيل" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="city">المدينة</label>
+<input class="input-minimal w-full py-2 font-body-md" id="city" placeholder="أدخل اسم المدينة" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="zip">الرمز البريدي</label>
+<input class="input-minimal w-full py-2 font-body-md" id="zip" placeholder="أدخل الرمز البريدي" type="text"/>
+</div>
+</div>
+</section>
+<hr class="border-outline-variant"/>
+<!-- Payment Method (COD ONLY) -->
+<section>
+<h2 class="font-headline-md text-headline-md mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined font-light text-2xl">payments</span>
+                        طريقة الدفع
+                    </h2>
+<div class="thin-border p-6 bg-surface-container-lowest flex items-start gap-4">
+<div class="mt-1">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-primary mb-1">الدفع عند الاستلام</h3>
+<p class="text-body-md text-on-surface-variant">لن يتم خصم أي مبالغ الآن. ستدفع قيمة الطلب نقداً عند استلامه من المندوب.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Order Summary (RTL so this is on the left visually) -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-low p-8 sticky top-32">
+<h2 class="font-headline-md text-headline-md mb-8 border-b border-outline-variant pb-4">ملخص الطلب</h2>
+<!-- Order Items -->
+<div class="space-y-6 mb-8 max-h-[409px] overflow-y-auto pr-2">
+<!-- Item 1 -->
+<div class="flex gap-4">
+<div class="w-24 h-32 bg-surface-dim shrink-0">
+<img class="w-full h-full object-cover" data-alt="A luxurious, minimalist photograph of a high-end liquid foundation bottle with a black matte cap. The background is a stark, clean white, illuminated by soft, high-key studio lighting. The brand's editorial aesthetic is emphasized by heavy negative space and subtle, elegant shadows. The overall mood is sophisticated and premium." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL55Csc89ac37ADmWNsTAGagGb6l4dc1XWssC_6V72V6Q-Bt2cO1JcjmvK-IEKEzmyEA9gT-S8RGH09U-DVF5GclVVX5SuusPWav9XniXZZQ5cuZpuiAHsWFmsWHFRofvYQrV840Ro1xTNfSz5PUM_edyB0eCFsFMd3W_vwa4i4QMh0xPaAJsYwXmXDlBqGeYeEelSl-eYvI2aGA0-Q3_lGJehv8HluDBo8NelncIsjB5uXhpGRW_Ybg"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-label-md text-label-md mb-1">كريم أساس سائل فايتكيت</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">الدرجة: 02 - عاجي</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">الكمية: 1</p>
+</div>
+<p class="font-body-md text-primary text-left" dir="ltr">₪ 250</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4">
+<div class="w-24 h-32 bg-surface-dim shrink-0">
+<img class="w-full h-full object-cover" data-alt="A striking, editorial-style close-up of a matte black lipstick tube lying on a smooth, reflective surface. The lighting is dramatic but soft, highlighting the sleek minimalist design of the packaging against a pure white background. The luxury makeup aesthetic is central, with a focus on clean lines and high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5eO_6DGDbmzyQDdynQ-tL-I5Vv58ZyNbCcB9nzxhEmwUpYdZlHtFhO337pkjmwXvEC8R_fNalqyNAOXHO6vq1nmbddnfUIbahnxGKmeL77OxizLv9Mj6kpSAxUMTxjoFK8ZlLWKFREYyIcEXvSb90wGeY0JiO6xmvCpUKaRdwo4PuxT7X4vyP-tgSLvFrSiGl8iVgRaJ9jLpP9KC4eblF8RhcPE-UHI6yjjutIf9Fm8v6-QxNQJBObw"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-label-md text-label-md mb-1">أحمر شفاه مطفي</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">اللون: أحمر كلاسيكي</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">الكمية: 2</p>
+</div>
+<p class="font-body-md text-primary text-left" dir="ltr">₪ 300</p>
+</div>
+</div>
+</div>
+<!-- Totals -->
+<div class="space-y-4 border-t border-outline-variant pt-6 mb-8">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">المجموع الفرعي</span>
+<span class="font-body-md" dir="ltr">₪ 550</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">تكلفة الشحن</span>
+<span class="font-body-md" dir="ltr">₪ 35</span>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant mt-4">
+<span class="font-headline-md text-headline-md-mobile">الإجمالي</span>
+<span class="font-headline-md text-headline-md-mobile" dir="ltr">₪ 585</span>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary text-on-primary py-4 font-label-md text-label-md hover:bg-inverse-surface transition-colors duration-300">
+                        تأكيد الطلب
+                    </button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant mt-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+                        معلوماتك آمنة ومحمية
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Components (Shared) -->
+<footer class="w-full py-section-gap border-t border-outline-variant bg-surface dark:bg-surface text-on-surface dark:text-on-surface flex flex-col items-center justify-center px-margin-desktop">
+<h2 class="font-display-lg text-display-lg text-primary text-center mb-8">FATEKIT</h2>
+<div class="flex flex-wrap justify-center gap-6 mb-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">عن الماركة</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">خدمة العملاء</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">الشروط والأحكام</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">سياسة الخصوصية</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">تواصل معنا</a>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 FATEKIT. جميع الحقوق محفوظة.</p>
+</footer>
+</body></html>
