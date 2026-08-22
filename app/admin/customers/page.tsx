@@ -25,7 +25,7 @@ export default async function AdminCustomersPage() {
         </div>
       </div>
 
-      <div className="bg-[#141414] border border-neutral-800 rounded-xs overflow-hidden">
+      <div className="bg-[#141414] border border-neutral-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
             <thead className="bg-[#181818] text-neutral-400 font-semibold border-b border-neutral-800">

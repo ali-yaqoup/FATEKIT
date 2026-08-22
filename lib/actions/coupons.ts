@@ -14,21 +14,25 @@ export async function validateCouponAction(code: string, subtotal: number) {
       where: { code: cleanCode },
     });
 
-    if (!coupon || !coupon.isActive) {
-      return { success: false, error: "كوبون الخصم غير صالح أو منتهي الصلاحية" };
+    if (!coupon) {
+      return { success: false, error: "كود الكوبون غير موجود، يرجى التأكد من كتابته بشكل صحيح." };
+    }
+
+    if (!coupon.isActive) {
+      return { success: false, error: "هذا الكوبون تم إيقافه حالياً." };
     }
 
     const now = new Date();
     if (coupon.startDate && coupon.startDate > now) {
-      return { success: false, error: "كوبون الخصم لم يبدأ بعد" };
+      return { success: false, error: "عذراً، هذا الكوبون الترويجي لم يبدأ تفعيله بعد." };
     }
 
     if (coupon.endDate && coupon.endDate < now) {
-      return { success: false, error: "كوبون الخصم انتهت صلاحيته" };
+      return { success: false, error: "عذراً، انتهت فترة صلاحية هذا الكوبون." };
     }
 
     if (coupon.usageLimit && coupon.usageCount >= coupon.usageLimit) {
-      return { success: false, error: "تم الوصول إلى الحد الأقصى لاستخدام الكوبون" };
+      return { success: false, error: "تم استنفاذ الحد الأقصى لمرات استخدام هذا الكوبون." };
     }
 
     const minAmount = coupon.minOrderAmount ? Number(coupon.minOrderAmount) : 0;

@@ -18,22 +18,43 @@ function AdminLoginContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setEmailError(null);
+    setPasswordError(null);
 
-    if (!email.trim() || !password.trim()) {
-      setError("الرجاء إدخال البريد الإلكتروني وكلمة المرور.");
-      return;
+    let hasError = false;
+    const cleanEmail = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!cleanEmail) {
+      setEmailError("الرجاء إدخال البريد الإلكتروني.");
+      hasError = true;
+    } else if (!emailRegex.test(cleanEmail)) {
+      setEmailError("صيغة البريد الإلكتروني غير صحيحة.");
+      hasError = true;
     }
+
+    if (!password.trim()) {
+      setPasswordError("الرجاء إدخال كلمة المرور.");
+      hasError = true;
+    } else if (password.trim().length < 6) {
+      setPasswordError("كلمة المرور يجب أن لا تقل عن 6 خانات.");
+      hasError = true;
+    }
+
+    if (hasError) return;
 
     setIsLoading(true);
 
     try {
-      const res = await loginAdminAction(email, password);
+      const res = await loginAdminAction(cleanEmail, password.trim());
 
       if (res.success) {
         router.push(redirectTarget);
@@ -90,13 +111,21 @@ function AdminLoginContent() {
                   type="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (emailError) setEmailError(null);
+                  }}
                   placeholder="admin@fatekit.com"
-                  className="w-full bg-[#1c1c1c] border border-neutral-800 px-4 py-3 pl-10 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-white transition dir-ltr text-right"
+                  className={`w-full bg-[#1c1c1c] border px-4 py-3 pl-10 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-white transition dir-ltr text-right ${
+                    emailError ? "border-red-500" : "border-neutral-800"
+                  }`}
                   autoComplete="email"
                 />
                 <Mail className="w-4 h-4 text-neutral-500 absolute left-3 top-3.5 pointer-events-none" />
               </div>
+              {emailError && (
+                <p className="text-[11px] text-red-400 font-sans">{emailError}</p>
+              )}
             </div>
 
             {/* Password Field */}
@@ -109,9 +138,14 @@ function AdminLoginContent() {
                   type={showPassword ? "text" : "password"}
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (passwordError) setPasswordError(null);
+                  }}
                   placeholder="••••••••"
-                  className="w-full bg-[#1c1c1c] border border-neutral-800 px-4 py-3 pl-10 pr-10 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-white transition dir-ltr text-right"
+                  className={`w-full bg-[#1c1c1c] border px-4 py-3 pl-10 pr-10 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-white transition dir-ltr text-right ${
+                    passwordError ? "border-red-500" : "border-neutral-800"
+                  }`}
                   autoComplete="current-password"
                 />
                 <Lock className="w-4 h-4 text-neutral-500 absolute right-3 top-3.5 pointer-events-none" />
@@ -125,6 +159,9 @@ function AdminLoginContent() {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
+              {passwordError && (
+                <p className="text-[11px] text-red-400 font-sans">{passwordError}</p>
+              )}
             </div>
 
             {/* Submit Button */}

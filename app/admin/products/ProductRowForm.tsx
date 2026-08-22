@@ -10,14 +10,23 @@ export function ProductRowForm({ product }: { product: any }) {
     : (product.quantity ?? 0));
   const [isSaving, setIsSaving] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
 
   const handleSave = async () => {
+    if (price < 0 || quantity < 0) {
+      alert("لا يمكن أن يكون السعر أو المخزون رقماً سالباً.");
+      return;
+    }
+
     setIsSaving(true);
     try {
-      await updateProductQuickAction(product.id, price, quantity);
+      await updateProductQuickAction(product.id, Math.max(0, price), Math.max(0, quantity));
       setIsDirty(false);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 2500);
     } catch (err) {
       console.error(err);
+      alert("حدث خطأ أثناء حفظ تعديلات المنتج.");
     }
     setIsSaving(false);
   };
@@ -69,11 +78,16 @@ export function ProductRowForm({ product }: { product: any }) {
          )}
       </td>
       <td className="p-4 text-center">
+        {savedSuccess && (
+          <span className="text-emerald-400 text-[10px] font-semibold block mb-1 animate-fade-in">
+            تم الحفظ ✓
+          </span>
+        )}
         {isDirty && (
           <button 
             onClick={handleSave} 
             disabled={isSaving}
-            className="bg-amber-600 hover:bg-amber-500 text-white px-2 py-1 text-[10px] rounded"
+            className="bg-amber-600 hover:bg-amber-500 text-white px-2.5 py-1 text-[10px] rounded font-medium transition disabled:opacity-50"
           >
             {isSaving ? "..." : "حفظ"}
           </button>

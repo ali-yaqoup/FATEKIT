@@ -76,16 +76,16 @@ export default function CartPage() {
 
         {items.length === 0 ? (
           <div className="text-center py-20 border border-neutral-200 bg-white max-w-md mx-auto p-8 shadow-xs">
-            <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ShoppingBag className="w-8 h-8 text-neutral-400" />
+            <div className="w-16 h-16 bg-neutral-100 border border-neutral-200 flex items-center justify-center mx-auto mb-4 text-neutral-400">
+              <ShoppingBag className="w-8 h-8" />
             </div>
-            <h2 className="font-serif text-2xl font-semibold mb-2">سلتكِ فارغة حالياً</h2>
-            <p className="text-sm font-sans text-neutral-500 mb-6 leading-relaxed">
+            <h2 className="font-serif text-2xl font-bold mb-2 text-black">سلتكِ فارغة حالياً</h2>
+            <p className="text-xs font-sans text-neutral-500 mb-6 leading-relaxed">
               استكشفي تشكيلاتنا الفاخرة وأضيفي منتجاتكِ المفضلة إلى السلة.
             </p>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors duration-300 shadow-xs"
             >
               <span>تصفحي المتجر</span>
               <ArrowLeft className="w-4 h-4" />
@@ -99,8 +99,8 @@ export default function CartPage() {
               
               {/* Free Shipping Notification Banner */}
               <div className="bg-white border border-neutral-200 p-5 shadow-xs">
-                <div className="flex items-center gap-2.5 mb-2 font-sans text-sm">
-                  <Truck className="w-5 h-5 text-black shrink-0" />
+                <div className="flex items-center gap-2.5 mb-2 font-sans text-xs">
+                  <Truck className="w-4 h-4 text-black shrink-0" />
                   {remainingForFreeShipping > 0 ? (
                     <span className="text-neutral-700">
                       أضيفي منتجات بقيمة{" "}
@@ -116,9 +116,9 @@ export default function CartPage() {
                     </span>
                   )}
                 </div>
-                <div className="w-full bg-neutral-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-neutral-100 h-1.5 overflow-hidden">
                   <div
-                    className="bg-black h-full transition-all duration-300"
+                    className="bg-black h-full transition-all duration-500 ease-out"
                     style={{ width: `${freeShippingProgress}%` }}
                   />
                 </div>

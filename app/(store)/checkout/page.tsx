@@ -45,12 +45,46 @@ export default function CheckoutPage() {
   const [city, setCity] = useState("رام الله والبيرة");
   const [deliveryNotes, setDeliveryNotes] = useState("");
 
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    phone?: string;
+    email?: string;
+    address?: string;
+  }>({});
+
   const [couponInput, setCouponInput] = useState("");
   const [couponError, setCouponError] = useState<string | null>(null);
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const validateFields = () => {
+    const errors: { name?: string; phone?: string; email?: string; address?: string } = {};
+
+    if (!name.trim() || name.trim().length < 3) {
+      errors.name = "الرجاء إدخال الاسم الكامل (3 أحرف على الأقل)";
+    }
+
+    const cleanPhone = phone.replace(/[\s-]/g, "");
+    const phoneRegex = /^(\+?97[02]|0)?5[0-9]{8}$/;
+    if (!phone.trim()) {
+      errors.phone = "الرجاء إدخال رقم الهاتف للتواصل والتسليم";
+    } else if (!phoneRegex.test(cleanPhone)) {
+      errors.phone = "صيغة رقم الهاتف غير صحيحة (مثال: 0599000000 أو 0569000000)";
+    }
+
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      errors.email = "الرجاء إدخال عنوان بريد إلكتروني صحيح (مثال: name@mail.com)";
+    }
+
+    if (!address.trim() || address.trim().length < 5) {
+      errors.address = "الرجاء كتابة العنوان التفصيلي (الشارع، اسم العمارة، الطابق)";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,25 +114,13 @@ export default function CheckoutPage() {
     e.preventDefault();
     setError(null);
 
-    if (!name.trim()) {
-      setError("الرجاء إدخال الاسم الكامل");
-      return;
-    }
-    if (!phone.trim()) {
-      setError("الرجاء إدخال رقم الهاتف للتواصل عند التوصيل");
-      return;
-    }
-    if (!address.trim()) {
-      setError("الرجاء إدخال عنوان الشحن التفصيلي (الشارع، البناية)");
-      return;
-    }
-    if (!city.trim()) {
-      setError("الرجاء تحديد المدينة");
+    if (!validateFields()) {
+      setError("يرجى تصحيح الأخطاء الموضحة في الحقول أدناه.");
       return;
     }
 
     if (items.length === 0) {
-      setError("سلة المشتريات فارغة");
+      setError("سلة المشتريات فارغة، لا يمكن إتمام الطلب.");
       return;
     }
 
@@ -206,10 +228,18 @@ export default function CheckoutPage() {
                       type="text"
                       required
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: undefined }));
+                      }}
                       placeholder="مثال: ريم أحمد"
-                      className="w-full bg-neutral-50 border border-neutral-300 px-4 py-3 text-sm focus:outline-none focus:border-black focus:bg-white transition"
+                      className={`w-full bg-neutral-50 border px-4 py-3 text-sm focus:outline-none focus:bg-white transition ${
+                        fieldErrors.name ? "border-red-500 focus:border-red-600 bg-red-50/20" : "border-neutral-300 focus:border-black"
+                      }`}
                     />
+                    {fieldErrors.name && (
+                      <p className="text-xs text-red-600 font-sans mt-1">{fieldErrors.name}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1.5">
@@ -220,10 +250,18 @@ export default function CheckoutPage() {
                       type="tel"
                       required
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                        if (fieldErrors.phone) setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+                      }}
                       placeholder="0599000000"
-                      className="w-full bg-neutral-50 border border-neutral-300 px-4 py-3 text-sm focus:outline-none focus:border-black focus:bg-white transition dir-ltr text-right"
+                      className={`w-full bg-neutral-50 border px-4 py-3 text-sm focus:outline-none focus:bg-white transition dir-ltr text-right ${
+                        fieldErrors.phone ? "border-red-500 focus:border-red-600 bg-red-50/20" : "border-neutral-300 focus:border-black"
+                      }`}
                     />
+                    {fieldErrors.phone && (
+                      <p className="text-xs text-red-600 font-sans mt-1">{fieldErrors.phone}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1.5">
@@ -233,10 +271,18 @@ export default function CheckoutPage() {
                     <input
                       type="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                      }}
                       placeholder="example@mail.com"
-                      className="w-full bg-neutral-50 border border-neutral-300 px-4 py-3 text-sm focus:outline-none focus:border-black focus:bg-white transition dir-ltr text-right"
+                      className={`w-full bg-neutral-50 border px-4 py-3 text-sm focus:outline-none focus:bg-white transition dir-ltr text-right ${
+                        fieldErrors.email ? "border-red-500 focus:border-red-600 bg-red-50/20" : "border-neutral-300 focus:border-black"
+                      }`}
                     />
+                    {fieldErrors.email && (
+                      <p className="text-xs text-red-600 font-sans mt-1">{fieldErrors.email}</p>
+                    )}
                   </div>
                 </div>
               </section>
@@ -273,10 +319,18 @@ export default function CheckoutPage() {
                       type="text"
                       required
                       value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                        if (fieldErrors.address) setFieldErrors((prev) => ({ ...prev, address: undefined }));
+                      }}
                       placeholder="مثال: شارع الإرسال، عمارة الأمل، ط 3"
-                      className="w-full bg-neutral-50 border border-neutral-300 px-4 py-3 text-sm focus:outline-none focus:border-black focus:bg-white transition"
+                      className={`w-full bg-neutral-50 border px-4 py-3 text-sm focus:outline-none focus:bg-white transition ${
+                        fieldErrors.address ? "border-red-500 focus:border-red-600 bg-red-50/20" : "border-neutral-300 focus:border-black"
+                      }`}
                     />
+                    {fieldErrors.address && (
+                      <p className="text-xs text-red-600 font-sans mt-1">{fieldErrors.address}</p>
+                    )}
                   </div>
 
                   <div className="md:col-span-2 space-y-1.5">
