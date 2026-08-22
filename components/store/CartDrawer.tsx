@@ -115,14 +115,14 @@ export function CartDrawer() {
                 سلة المشتريات
               </h2>
               {totalItemCount > 0 && (
-                <span className="bg-black text-white text-[11px] font-semibold px-2 py-0.5 rounded-full">
+                <span className="bg-black text-white text-[11px] font-semibold px-2 py-0.5">
                   {totalItemCount}
                 </span>
               )}
             </div>
             <button
               onClick={closeDrawer}
-              className="p-2 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-full transition"
+              className="p-2 text-neutral-400 hover:text-black hover:bg-neutral-100 transition-colors duration-200"
               aria-label="إغلاق السلة"
             >
               <X className="w-5 h-5" />
@@ -149,9 +149,9 @@ export function CartDrawer() {
                   </span>
                 )}
               </div>
-              <div className="w-full bg-neutral-200 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-neutral-200 h-1.5 overflow-hidden">
                 <div
-                  className="bg-black h-full transition-all duration-300"
+                  className="bg-black h-full transition-all duration-500 ease-out"
                   style={{ width: `${freeShippingProgress}%` }}
                 />
               </div>
@@ -340,17 +340,17 @@ export function CartDrawer() {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2.5 pt-1">
                 <button
                   onClick={handleCheckoutClick}
-                  className="w-full py-3.5 bg-black text-white text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-black text-white text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors duration-300 flex items-center justify-center gap-2 shadow-xs"
                 >
                   <span>إتمام الطلب (الدفع عند الاستلام)</span>
                   <ArrowLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleViewCartClick}
-                  className="w-full py-2.5 bg-white border border-neutral-300 text-black text-xs font-semibold hover:bg-neutral-100 transition text-center block"
+                  className="w-full py-3 bg-white border border-black text-black text-xs uppercase tracking-widest font-semibold hover:bg-neutral-100 transition-colors duration-300 text-center block"
                 >
                   عرض سلة المشتريات بالتفصيل
                 </button>

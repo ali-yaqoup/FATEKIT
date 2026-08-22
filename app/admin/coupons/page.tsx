@@ -27,7 +27,7 @@ export default async function AdminCouponsPage() {
         <CreateCouponForm />
       </div>
 
-      <div className="bg-[#141414] border border-neutral-800 rounded-xs overflow-hidden">
+      <div className="bg-[#141414] border border-neutral-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
             <thead className="bg-[#181818] text-neutral-400 font-semibold border-b border-neutral-800">
@@ -60,7 +60,7 @@ export default async function AdminCouponsPage() {
                   </td>
                   <td className="p-4">
                     <span
-                      className={`inline-flex items-center px-2 py-0.5 text-[10px] font-semibold border rounded-xs ${
+                      className={`inline-flex items-center px-2 py-0.5 text-[10px] font-semibold border ${
                         coupon.isActive
                           ? "bg-emerald-950/80 text-emerald-300 border-emerald-800/60"
                           : "bg-neutral-900 text-neutral-500 border-neutral-800"

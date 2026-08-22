@@ -30,7 +30,7 @@ export function OrderActions({ orderNumber, total }: OrderActionsProps) {
       <button
         onClick={handleCopyOrderNumber}
         type="button"
-        className="inline-flex items-center gap-1.5 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold rounded-xs transition"
+        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold uppercase tracking-wider transition-colors duration-200 border border-neutral-200"
         title="نسخ رقم الطلب"
       >
         {copied ? (
@@ -49,7 +49,7 @@ export function OrderActions({ orderNumber, total }: OrderActionsProps) {
       <button
         onClick={handlePrint}
         type="button"
-        className="inline-flex items-center gap-1.5 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold rounded-xs transition"
+        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold uppercase tracking-wider transition-colors duration-200 border border-neutral-200"
       >
         <Printer className="w-3.5 h-3.5" />
         <span>طباعة تفاصيل الطلب</span>
@@ -59,7 +59,7 @@ export function OrderActions({ orderNumber, total }: OrderActionsProps) {
         href={`https://wa.me/970599000000?text=${whatsappMessage}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold rounded-xs transition"
+        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white hover:bg-neutral-50 text-emerald-800 border border-emerald-300 text-xs font-semibold uppercase tracking-wider transition-colors duration-200"
       >
         <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
         <span>مساعدة عبر واتساب</span>

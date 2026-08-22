@@ -161,9 +161,20 @@ export async function createOrderAction(input: CheckoutInput) {
           },
         });
 
-        // 3. Decrement Inventory per item
+        // 3. Validate & Decrement Inventory per item
         for (const item of input.items) {
           if (item.variantId) {
+            const variant = await tx.productVariant.findUnique({
+              where: { id: item.variantId },
+            });
+            if (!variant || variant.quantity < item.quantity) {
+              const available = variant ? variant.quantity : 0;
+              throw new Error(
+                available > 0
+                  ? `الكمية المطلوبة للمنتج (${item.productName} - ${item.variantName || ""}) تتجاوز المخزون المتاح حالياً (المتبقي: ${available}).`
+                  : `نعتذر، لقد نفد مخزون المنتج (${item.productName} - ${item.variantName || ""}) تماماً.`
+              );
+            }
             await tx.productVariant.update({
               where: { id: item.variantId },
               data: {
@@ -171,6 +182,17 @@ export async function createOrderAction(input: CheckoutInput) {
               },
             });
           } else {
+            const prod = await tx.product.findUnique({
+              where: { id: item.productId },
+            });
+            const available = prod?.quantity ?? 0;
+            if (!prod || available < item.quantity) {
+              throw new Error(
+                available > 0
+                  ? `الكمية المطلوبة للمنتج (${item.productName}) تتجاوز المخزون المتاح حالياً (المتبقي: ${available}).`
+                  : `نعتذر، لقد نفد مخزون المنتج (${item.productName}) تماماً.`
+              );
+            }
             await tx.product.update({
               where: { id: item.productId },
               data: {
@@ -204,11 +226,11 @@ export async function createOrderAction(input: CheckoutInput) {
       orderNumber: result.orderNumber,
       total: Number(result.total),
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error creating order in DB:", error);
     return {
       success: false,
-      error: "حدث خطأ أثناء إنشاء الطلب في قاعدة البيانات، يرجى المحاولة لاحقاً.",
+      error: error?.message || "حدث خطأ أثناء إنشاء الطلب في قاعدة البيانات، يرجى المحاولة لاحقاً.",
     };
   }
 }

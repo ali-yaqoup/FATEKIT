@@ -31,7 +31,7 @@ export default async function AdminProductsPage() {
         </div>
       </div>
 
-      <div className="bg-[#141414] border border-neutral-800 rounded-xs overflow-hidden">
+      <div className="bg-[#141414] border border-neutral-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
             <thead className="bg-[#181818] text-neutral-400 font-semibold border-b border-neutral-800">
@@ -73,7 +73,7 @@ export default async function AdminProductsPage() {
                       <Link
                         href={`/product/${product.slug}`}
                         target="_blank"
-                        className="inline-flex p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-xs transition"
+                        className="inline-flex p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
                         title="معاينة في المتجر"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />

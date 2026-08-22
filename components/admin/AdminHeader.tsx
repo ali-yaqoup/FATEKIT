@@ -29,7 +29,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
           {todayFormatted}
         </span>
         <span className="text-neutral-600">•</span>
-        <span className="bg-emerald-950/60 border border-emerald-800/50 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+        <span className="bg-neutral-900 border border-neutral-700 text-emerald-400 text-[10px] font-bold px-2.5 py-1 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           المتجر نشط (₪ شيكل)
         </span>
@@ -41,7 +41,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold rounded-xs border border-neutral-700 transition"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold border border-neutral-700 transition-colors duration-200"
         >
           <span>معاينة المتجر</span>
           <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
@@ -52,7 +52,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
             <p className="text-xs font-bold text-white leading-tight">{user.name}</p>
             <p className="text-[10px] text-neutral-400 font-mono">{user.email}</p>
           </div>
-          <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-serif font-bold text-xs">
+          <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-serif font-bold text-xs">
             {user.name.charAt(0)}
           </div>
         </div>

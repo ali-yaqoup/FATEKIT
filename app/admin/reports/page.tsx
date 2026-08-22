@@ -40,19 +40,19 @@ export default async function AdminReportsPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="p-6 bg-[#141414] border border-neutral-800 rounded-xs space-y-2">
+        <div className="p-6 bg-[#141414] border border-neutral-800 space-y-2">
           <span className="text-xs font-semibold text-neutral-400">إجمالي الإيرادات الفعلية</span>
           <p className="font-serif text-3xl font-bold text-emerald-400">{totalRevenue.toFixed(2)} ₪</p>
           <p className="text-[11px] text-neutral-500">لجميع الطلبات المؤكدة والمسلمة</p>
         </div>
 
-        <div className="p-6 bg-[#141414] border border-neutral-800 rounded-xs space-y-2">
+        <div className="p-6 bg-[#141414] border border-neutral-800 space-y-2">
           <span className="text-xs font-semibold text-neutral-400">متوسط قيمة الطلب (AOV)</span>
           <p className="font-serif text-3xl font-bold text-white">{avgOrderValue.toFixed(2)} ₪</p>
           <p className="text-[11px] text-neutral-500">لكل عملية شراء</p>
         </div>
 
-        <div className="p-6 bg-[#141414] border border-neutral-800 rounded-xs space-y-2">
+        <div className="p-6 bg-[#141414] border border-neutral-800 space-y-2">
           <span className="text-xs font-semibold text-neutral-400">إجمالي العمليات المنجزة</span>
           <p className="font-serif text-3xl font-bold text-white">{orders.length} طلب</p>
           <p className="text-[11px] text-neutral-500">من {customers.length} عميل فريد</p>
@@ -60,7 +60,7 @@ export default async function AdminReportsPage() {
       </div>
 
       {/* City Breakdown Table */}
-      <div className="bg-[#141414] border border-neutral-800 rounded-xs overflow-hidden">
+      <div className="bg-[#141414] border border-neutral-800 overflow-hidden">
         <div className="p-6 border-b border-neutral-800">
           <h2 className="font-serif text-lg font-bold text-white flex items-center gap-2">
             <MapPin className="w-5 h-5 text-neutral-400" />

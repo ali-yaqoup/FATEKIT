@@ -153,7 +153,7 @@ export default async function OrderConfirmationPage({ params }: OrderPageProps) 
 
           {/* Key Reference Badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <div className="bg-neutral-100 border border-neutral-200 px-4 py-2.5 rounded-xs flex items-center gap-2">
+            <div className="bg-neutral-100 border border-neutral-200 px-4 py-2.5 flex items-center gap-2">
               <FileText className="w-4 h-4 text-neutral-600" />
               <span className="text-xs text-neutral-500">رقم الطلب:</span>
               <strong className="font-serif font-bold text-black text-sm dir-ltr tracking-wider">
@@ -161,12 +161,12 @@ export default async function OrderConfirmationPage({ params }: OrderPageProps) 
               </strong>
             </div>
 
-            <div className={`border px-4 py-2.5 rounded-xs flex items-center gap-2 ${currentStatusConfig.colorClass}`}>
+            <div className={`border px-4 py-2.5 flex items-center gap-2 ${currentStatusConfig.colorClass}`}>
               <StatusIcon className="w-4 h-4" />
               <span className="text-xs font-semibold">الحالة: {currentStatusConfig.label}</span>
             </div>
 
-            <div className="bg-neutral-100 border border-neutral-200 px-4 py-2.5 rounded-xs flex items-center gap-2">
+            <div className="bg-neutral-100 border border-neutral-200 px-4 py-2.5 flex items-center gap-2">
               <span className="text-xs text-neutral-500">تاريخ التسجيل:</span>
               <span className="text-xs font-semibold text-black">
                 {new Date(order.createdAt).toLocaleDateString("ar-EG", {
@@ -362,7 +362,7 @@ export default async function OrderConfirmationPage({ params }: OrderPageProps) 
                 </div>
 
                 {order.deliveryNotes && (
-                  <div className="md:col-span-2 space-y-1 bg-neutral-50 p-3.5 border border-neutral-200 rounded-xs">
+                  <div className="md:col-span-2 space-y-1 bg-neutral-50 p-3.5 border border-neutral-200">
                     <span className="text-neutral-500 font-medium">ملاحظات موجهة للمندوب:</span>
                     <p className="text-xs text-neutral-800 mt-0.5">{order.deliveryNotes}</p>
                   </div>

@@ -129,7 +129,7 @@ export default async function AdminDashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/orders"
-            className="px-4 py-2.5 bg-white text-black text-xs font-bold uppercase tracking-wider rounded-xs hover:bg-neutral-200 transition flex items-center gap-2 shadow-xs"
+            className="px-4 py-2.5 bg-white text-black text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 transition flex items-center gap-2 shadow-xs"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             <span>عرض كافة الطلبات</span>
@@ -144,11 +144,11 @@ export default async function AdminDashboardPage() {
           return (
             <div
               key={card.title}
-              className={`p-6 border rounded-xs bg-[#141414] border-neutral-800 space-y-3 transition hover:border-neutral-700`}
+              className={`p-6 border bg-[#141414] border-neutral-800 space-y-3 transition hover:border-neutral-700`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-neutral-400">{card.title}</span>
-                <div className={`p-2 rounded-xs bg-neutral-900 border border-neutral-800 ${card.accent}`}>
+                <div className={`p-2 bg-neutral-900 border border-neutral-800 ${card.accent}`}>
                   <Icon className="w-4 h-4" />
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default async function AdminDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <Link
           href="/admin/orders"
-          className="p-6 bg-[#141414] border border-neutral-800 hover:border-neutral-600 rounded-xs transition group flex justify-between items-start"
+          className="p-6 bg-[#141414] border border-neutral-800 hover:border-neutral-600 transition group flex justify-between items-start"
         >
           <div className="space-y-1">
             <h3 className="font-serif text-base font-bold text-white group-hover:text-amber-300 transition">
@@ -182,7 +182,7 @@ export default async function AdminDashboardPage() {
 
         <Link
           href="/admin/products"
-          className="p-6 bg-[#141414] border border-neutral-800 hover:border-neutral-600 rounded-xs transition group flex justify-between items-start"
+          className="p-6 bg-[#141414] border border-neutral-800 hover:border-neutral-600 transition group flex justify-between items-start"
         >
           <div className="space-y-1">
             <h3 className="font-serif text-base font-bold text-white group-hover:text-amber-300 transition">
@@ -197,7 +197,7 @@ export default async function AdminDashboardPage() {
 
         <Link
           href="/admin/coupons"
-          className="p-6 bg-[#141414] border border-neutral-800 hover:border-neutral-600 rounded-xs transition group flex justify-between items-start"
+          className="p-6 bg-[#141414] border border-neutral-800 hover:border-neutral-600 transition group flex justify-between items-start"
         >
           <div className="space-y-1">
             <h3 className="font-serif text-base font-bold text-white group-hover:text-amber-300 transition">
@@ -212,7 +212,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Recent Orders Section */}
-      <div className="bg-[#141414] border border-neutral-800 rounded-xs overflow-hidden">
+      <div className="bg-[#141414] border border-neutral-800 overflow-hidden">
         <div className="p-6 border-b border-neutral-800 flex items-center justify-between">
           <div>
             <h2 className="font-serif text-lg font-bold text-white">
@@ -274,7 +274,7 @@ export default async function AdminDashboardPage() {
                       </td>
                       <td className="p-4">
                         <span
-                          className={`inline-flex items-center px-2.5 py-1 text-[11px] font-semibold border rounded-xs ${badge.classNames}`}
+                          className={`inline-flex items-center px-2.5 py-1 text-[11px] font-semibold border ${badge.classNames}`}
                         >
                           {badge.label}
                         </span>
@@ -297,7 +297,7 @@ export default async function AdminDashboardPage() {
                         <Link
                           href={`/order/${order.orderNumber}`}
                           target="_blank"
-                          className="inline-flex p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-xs transition"
+                          className="inline-flex p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
                           title="معاينة تفاصيل الطلب"
                         >
                           <Eye className="w-4 h-4" />

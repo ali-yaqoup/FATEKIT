@@ -274,7 +274,7 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
               <button
                 onClick={handleAddToCart}
                 disabled={currentStock <= 0}
-                className={`w-full py-4 font-sans text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition ${
+                className={`w-full py-4 font-sans text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs ${
                   addedToCart
                     ? "bg-emerald-800 text-white"
                     : currentStock > 0
@@ -283,21 +283,21 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
                 }`}
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>{addedToCart ? "تمت الإضافة للسلة ✓" : "أضيفي إلى السلة"}</span>
+                <span>{addedToCart ? "تمت الإضافة للسلة بنجاح ✓" : "أضيفي إلى السلة"}</span>
               </button>
 
               <Link
                 href="/cart"
-                className="w-full text-center py-4 border border-black text-black font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-100 transition block"
+                className="w-full text-center py-3.5 border border-black text-black font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-100 transition-colors duration-300 block"
               >
                 عرض سلة المشتريات
               </Link>
             </div>
 
             {/* Cash on Delivery Badge */}
-            <div className="flex items-center gap-3 p-4 bg-neutral-100 border border-neutral-200 mb-10 text-xs font-medium text-neutral-800">
+            <div className="flex items-center gap-3 p-4 bg-neutral-100 border border-neutral-200 mb-10 text-xs font-medium text-neutral-800 font-sans">
               <Truck className="w-5 h-5 text-black shrink-0" />
-              <span>الدفع عند الاستلام متوفر لجميع المدن (COD ₪)</span>
+              <span>الدفع نقداً عند الاستلام متوفر لجميع المدن (COD ₪)</span>
             </div>
 
             {/* Accordions Section */}

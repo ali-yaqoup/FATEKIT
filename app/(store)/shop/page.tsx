@@ -166,7 +166,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
               {/* Price Filter */}
               <div className="border-b border-neutral-200 pb-6">
-                <h3 className="font-sans text-xs font-semibold uppercase tracking-wider mb-4 text-black">
+                <h3 className="font-sans text-xs font-semibold uppercase tracking-widest mb-4 text-black">
                   السعر (₪)
                 </h3>
                 <form action="/shop" method="GET" className="space-y-3">
@@ -179,7 +179,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                       defaultValue={minPrice ?? ""}
                       placeholder="من"
                       type="number"
-                      className="w-full bg-transparent border-0 border-b border-neutral-300 focus:ring-0 focus:border-black font-sans text-sm p-1.5 text-center"
+                      className="w-full bg-white border border-neutral-300 focus:outline-none focus:border-black font-sans text-xs p-2 text-center"
                     />
                     <span className="text-neutral-400">-</span>
                     <input
@@ -187,12 +187,12 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                       defaultValue={maxPrice ?? ""}
                       placeholder="إلى"
                       type="number"
-                      className="w-full bg-transparent border-0 border-b border-neutral-300 focus:ring-0 focus:border-black font-sans text-sm p-1.5 text-center"
+                      className="w-full bg-white border border-neutral-300 focus:outline-none focus:border-black font-sans text-xs p-2 text-center"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-black text-white py-2 text-xs uppercase font-medium tracking-wider hover:bg-neutral-800 transition"
+                    className="w-full bg-black text-white py-2.5 text-xs uppercase font-semibold tracking-widest hover:bg-neutral-800 transition-colors duration-300 shadow-xs"
                   >
                     تطبيق الفلتر
                   </button>
@@ -202,22 +202,22 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </aside>
 
           {/* Main Product Section */}
-          <main className="flex-grow">
+          <main className="flex-grow font-sans">
             {/* Top Bar: Count & Sorting */}
             <div className="flex justify-between items-center mb-8 pb-4 border-b border-neutral-200 text-xs text-neutral-500">
-              <span>
+              <span className="font-medium">
                 عرض {products.length > 0 ? (currentPage - 1) * pageSize + 1 : 0}-
                 {Math.min(currentPage * pageSize, totalCount)} من أصل {totalCount} منتج
               </span>
 
               {/* Sort selector */}
               <div className="flex items-center gap-2">
-                <label htmlFor="sort-select" className="hidden sm:inline">ترتيب حسب:</label>
+                <label htmlFor="sort-select" className="hidden sm:inline font-medium">ترتيب حسب:</label>
                 <SortSelect currentSort={sort} />
               </div>
             </div>
 
-            {/* Product Grid matching fatekit_1 */}
+            {/* Product Grid */}
             {products.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                 {products.map((product) => {
@@ -229,7 +229,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                     <Link
                       key={product.id}
                       href={`/product/${product.slug}`}
-                      className="group block"
+                      className="group block text-right"
                     >
                       <div className="relative w-full aspect-[3/4] mb-4 bg-neutral-100 overflow-hidden border border-neutral-200">
                         <Image
@@ -237,25 +237,25 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                           alt={product.name}
                           fill
                           loading="lazy"
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         />
                         {product.discountPercent && (
-                          <span className="absolute top-3 right-3 bg-black text-white text-[10px] uppercase font-bold px-2 py-1">
+                          <span className="absolute top-3 right-3 bg-black text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-1">
                             خصم {product.discountPercent}%
                           </span>
                         )}
-                        <div className="absolute inset-x-0 bottom-0 bg-black text-white py-3 text-center text-xs uppercase tracking-wider opacity-0 group-hover:opacity-100 transition">
+                        <div className="absolute inset-x-0 bottom-0 bg-black text-white py-3.5 text-center text-xs uppercase tracking-widest font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
                           عرض التفاصيل
                         </div>
                       </div>
                       <div className="text-right">
-                        <h3 className="font-serif text-base font-medium text-neutral-900 group-hover:text-black transition mb-1">
+                        <h3 className="font-serif text-base font-medium text-neutral-900 group-hover:text-black transition-colors duration-200 mb-1 line-clamp-1">
                           {product.name}
                         </h3>
-                        <p className="font-sans text-xs text-neutral-400 mb-2">
+                        <p className="font-sans text-xs text-neutral-400 mb-1.5 uppercase tracking-wider">
                           {product.brand || "FATEKIT"}
                         </p>
-                        <div className="flex items-center gap-2 font-sans font-semibold text-sm text-neutral-900">
+                        <div className="flex items-center gap-2 font-sans font-bold text-sm text-black">
                           <span>{Number(product.price).toFixed(2)} ₪</span>
                           {Boolean(product.compareAtPrice) && (
                             <span className="text-xs text-neutral-400 line-through font-normal">
@@ -269,21 +269,39 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 })}
               </div>
             ) : (
-              <div className="py-20 text-center text-neutral-500 font-sans">
-                لا توجد منتجات تطابق خيارات الفلترة المحددة.
+              <div className="py-20 text-center bg-white border border-neutral-200 p-12 space-y-5">
+                <div className="w-16 h-16 bg-neutral-100 border border-neutral-200 flex items-center justify-center mx-auto text-neutral-500">
+                  <span className="font-serif text-2xl font-bold">∅</span>
+                </div>
+                <div className="space-y-2 max-w-md mx-auto">
+                  <h3 className="font-serif text-2xl font-bold text-neutral-900">
+                    لا توجد منتجات مطابقة
+                  </h3>
+                  <p className="font-sans text-xs text-neutral-500 leading-relaxed">
+                    لم نتمكن من العثور على أي منتجات تطابق خيارات الفلترة أو نطاق الأسعار المحدد. جربي إعادة تعيين الفلاتر أو تصفح كافة التشكيلات.
+                  </p>
+                </div>
+                <div className="pt-2">
+                  <Link
+                    href="/shop"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors duration-300 shadow-xs"
+                  >
+                    إعادة تعيين كافة الفلاتر
+                  </Link>
+                </div>
               </div>
             )}
 
-            {/* Pagination Controls matching fatekit_1 */}
+            {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-16 flex justify-center items-center gap-3 border-t border-neutral-200 pt-8">
+              <div className="mt-16 flex justify-center items-center gap-2 border-t border-neutral-200 pt-8">
                 {currentPage > 1 && (
                   <Link
                     href={`/shop?page=${currentPage - 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}`}
-                    className="w-10 h-10 border border-neutral-300 flex items-center justify-center hover:bg-black hover:text-white transition"
+                    className="w-10 h-10 border border-neutral-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors duration-200"
                     aria-label="الصفحة السابقة"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4" />
                   </Link>
                 )}
 
@@ -291,10 +309,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   <Link
                     key={pageNum}
                     href={`/shop?page=${pageNum}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}`}
-                    className={`w-10 h-10 border flex items-center justify-center font-sans text-sm transition ${
+                    className={`w-10 h-10 border flex items-center justify-center font-sans text-xs font-semibold transition-colors duration-200 ${
                       pageNum === currentPage
-                        ? "border-black bg-black text-white font-bold"
-                        : "border-neutral-300 hover:border-black text-neutral-700"
+                        ? "border-black bg-black text-white"
+                        : "border-neutral-300 hover:border-black text-neutral-700 hover:bg-neutral-50"
                     }`}
                   >
                     {pageNum}
@@ -304,10 +322,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 {currentPage < totalPages && (
                   <Link
                     href={`/shop?page=${currentPage + 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}`}
-                    className="w-10 h-10 border border-neutral-300 flex items-center justify-center hover:bg-black hover:text-white transition"
+                    className="w-10 h-10 border border-neutral-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors duration-200"
                     aria-label="الصفحة التالية"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4" />
                   </Link>
                 )}
               </div>
