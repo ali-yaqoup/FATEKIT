@@ -3,7 +3,6 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { db } from "@/lib/db";
 
-export const revalidate = 0;
 
 export default async function HomePage() {
   const content = await db.homepageContent.findUnique({
@@ -259,7 +258,8 @@ export default async function HomePage() {
 }
 
 function ProductCard({ product }: { product: { id: string; name: string; slug: string; price: unknown; compareAtPrice?: unknown; discountPercent?: number | null; images: { url: string }[] } }) {
-  const imageUrl = product.images[0]?.url || "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80";
+  // استخدام صورة المنتج الحقيقية أو صورة ثابتة في حالة عدم توفرها لعدم توليد صور عشوائية في كل مرة
+  const imageUrl = product.images[0]?.url || "https://picsum.photos/seed/placeholder/800/800";
 
   return (
     <Link href={`/product/${product.slug}`} className="group block">
@@ -268,6 +268,7 @@ function ProductCard({ product }: { product: { id: string; name: string; slug: s
           src={imageUrl}
           alt={product.name}
           fill
+          loading="lazy"
           className="object-cover group-hover:scale-105 transition duration-500"
         />
         {product.discountPercent && (

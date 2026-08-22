@@ -3,7 +3,6 @@ import { BarChart3, TrendingUp, DollarSign, MapPin, ShoppingBag } from "lucide-r
 import { AdminRole, OrderStatus } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 
-export const dynamic = "force-dynamic";
 
 export default async function AdminReportsPage() {
   await requireAdminRole([AdminRole.OWNER]);

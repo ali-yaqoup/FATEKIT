@@ -51,7 +51,7 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
   const { addItem } = useCart();
   const images = product.images.length > 0
     ? product.images
-    : [{ id: "default", url: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80", sortOrder: 0 }];
+    : [{ id: "default", url: "https://picsum.photos/seed/placeholder/800/800", sortOrder: 0 }];
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(

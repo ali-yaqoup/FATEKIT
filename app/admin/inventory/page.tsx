@@ -3,7 +3,6 @@ import { AlertTriangle, PackageSearch } from "lucide-react";
 import { requireAdminRole } from "@/lib/actions/auth";
 import { db } from "@/lib/db";
 
-export const dynamic = "force-dynamic";
 
 const LOW_STOCK_THRESHOLD = 5;
 

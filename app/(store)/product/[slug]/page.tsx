@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { ProductDetailsClient } from "@/components/store/ProductDetailsClient";
 
-export const revalidate = 0;
 
 interface ProductPageProps {
   params: Promise<{

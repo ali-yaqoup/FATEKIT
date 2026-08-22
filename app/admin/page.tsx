@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { OrderStatus } from "@prisma/client";
 
-export const dynamic = "force-dynamic";
 
 const STATUS_BADGES: Record<
   OrderStatus,
@@ -42,7 +41,11 @@ const STATUS_BADGES: Record<
   },
 };
 
+import { requireAdminRole } from "@/lib/actions/auth";
+import { AdminRole } from "@prisma/client";
+
 export default async function AdminDashboardPage() {
+  await requireAdminRole([AdminRole.OWNER, AdminRole.STAFF]);
   // Aggregate real store statistics in parallel
   const [
     totalOrdersCount,

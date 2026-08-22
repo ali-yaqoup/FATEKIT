@@ -4,7 +4,6 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import { db } from "@/lib/db";
 import { SortSelect } from "@/components/store/SortSelect";
 
-export const revalidate = 0;
 
 interface ShopPageProps {
   searchParams: Promise<{
@@ -224,7 +223,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 {products.map((product) => {
                   const imageUrl =
                     product.images[0]?.url ||
-                    "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80";
+                    "https://picsum.photos/seed/placeholder/800/800";
 
                   return (
                     <Link
@@ -237,6 +236,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                           src={imageUrl}
                           alt={product.name}
                           fill
+                          loading="lazy"
                           className="object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                         {product.discountPercent && (

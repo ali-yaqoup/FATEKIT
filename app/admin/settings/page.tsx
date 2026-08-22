@@ -3,7 +3,6 @@ import { Settings, Truck, Phone, Mail, ShieldCheck } from "lucide-react";
 import { AdminRole } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 
-export const dynamic = "force-dynamic";
 
 export default async function AdminSettingsPage() {
   await requireAdminRole([AdminRole.OWNER]);

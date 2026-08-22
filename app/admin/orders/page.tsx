@@ -4,7 +4,6 @@ import { Eye, ShoppingBag } from "lucide-react";
 import { AdminRole, OrderStatus } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 
-export const dynamic = "force-dynamic";
 
 const STATUS_BADGES: Record<OrderStatus, { label: string; classNames: string }> = {
   NEW: { label: "جديد", classNames: "bg-white text-black border-black" },

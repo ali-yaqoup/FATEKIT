@@ -21,8 +21,6 @@ import { db } from "@/lib/db";
 import { OrderStatus } from "@prisma/client";
 import { OrderActions } from "@/components/store/OrderActions";
 
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
 
 interface OrderPageProps {
   params: Promise<{
@@ -265,7 +263,7 @@ export default async function OrderConfirmationPage({ params }: OrderPageProps) 
                   const fallbackImage =
                     item.variant?.imageUrl ||
                     item.product?.images[0]?.url ||
-                    "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80";
+                    "https://picsum.photos/seed/placeholder/800/800";
 
                   return (
                     <div

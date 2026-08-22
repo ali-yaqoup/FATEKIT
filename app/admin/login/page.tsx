@@ -5,7 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, AlertCircle, ArrowLeft } from "lucide-react";
 import { loginAdminAction } from "@/lib/actions/auth";
 
-export default function AdminLoginPage() {
+import { Suspense } from "react";
+
+function AdminLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestedTarget = searchParams.get("from");
@@ -167,3 +169,4 @@ export default function AdminLoginPage() {
     </div>
   );
 }
+export default function AdminLoginPage() { return <Suspense fallback={<div>Loading...</div>}><AdminLoginContent /></Suspense>; }

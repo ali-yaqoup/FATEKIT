@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${playfair.variable} ${ibmPlexArabic.variable}`}>
-      <body className="bg-background text-on-background antialiased min-h-screen">
+    <html lang="ar" dir="rtl" className={`${playfair.variable} ${ibmPlexArabic.variable}`} suppressHydrationWarning>
+      <body className="bg-background text-on-background antialiased min-h-screen" suppressHydrationWarning>
         {children}
       </body>
     </html>

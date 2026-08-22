@@ -2,8 +2,8 @@ import { db } from "@/lib/db";
 import { Tag, Check, X, Calendar } from "lucide-react";
 import { AdminRole } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
+import { CreateCouponForm } from "./CreateCouponForm";
 
-export const dynamic = "force-dynamic";
 
 export default async function AdminCouponsPage() {
   await requireAdminRole([AdminRole.OWNER, AdminRole.STAFF]);
@@ -24,6 +24,7 @@ export default async function AdminCouponsPage() {
             إجمالي {coupons.length} كوبون ترويجي فعال ومسجل
           </p>
         </div>
+        <CreateCouponForm />
       </div>
 
       <div className="bg-[#141414] border border-neutral-800 rounded-xs overflow-hidden">
