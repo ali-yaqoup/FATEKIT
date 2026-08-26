@@ -32,3 +32,12 @@ export async function createCouponAction(data: {
 
   revalidatePath("/admin/coupons");
 }
+
+export async function toggleCouponAction(id: string, isActive: boolean) {
+  await requireAdminRole([AdminRole.OWNER, AdminRole.STAFF]);
+  await db.coupon.update({
+    where: { id },
+    data: { isActive },
+  });
+  revalidatePath("/admin/coupons");
+}

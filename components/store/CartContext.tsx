@@ -39,6 +39,7 @@ interface CartContextType {
   discount: number;
   total: number;
   freeShippingThreshold: number;
+  deliveryAreas: string[];
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -47,8 +48,31 @@ const CART_STORAGE_KEY = "fatekit_cart_items";
 const COUPON_STORAGE_KEY = "fatekit_cart_coupon";
 const FREE_SHIPPING_MIN = 350;
 const STANDARD_SHIPPING_FEE = 30;
+const DEFAULT_CITIES = [
+  "القدس",
+  "رام الله والبيرة",
+  "نابلس",
+  "الخليل",
+  "بيت لحم",
+  "جنين",
+  "طولكرم",
+  "قلقيلية",
+  "أريحا والأغوار",
+  "سلفيت",
+  "طوباس",
+];
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+export function CartProvider({
+  children,
+  deliveryFee = STANDARD_SHIPPING_FEE,
+  freeShippingMinimum = FREE_SHIPPING_MIN,
+  deliveryAreas = DEFAULT_CITIES,
+}: {
+  children: React.ReactNode;
+  deliveryFee?: number;
+  freeShippingMinimum?: number;
+  deliveryAreas?: string[];
+}) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -124,7 +148,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const closeDrawer = () => setIsDrawerOpen(false);
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingFee = subtotal === 0 ? 0 : subtotal >= FREE_SHIPPING_MIN ? 0 : STANDARD_SHIPPING_FEE;
+  const shippingFee = subtotal === 0 ? 0 : subtotal >= freeShippingMinimum ? 0 : deliveryFee;
 
   let discount = 0;
   if (appliedCoupon && subtotal > 0) {
@@ -156,7 +180,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         shippingFee,
         discount,
         total,
-        freeShippingThreshold: FREE_SHIPPING_MIN,
+        freeShippingThreshold: freeShippingMinimum,
+        deliveryAreas,
       }}
     >
       {children}

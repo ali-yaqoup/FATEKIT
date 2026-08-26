@@ -9,6 +9,7 @@ import {
   Users,
   Warehouse,
   Tag,
+  Layers,
   BarChart3,
   Globe,
   Settings,
@@ -59,6 +60,12 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
       roles: ["OWNER", "STAFF"],
     },
     {
+      label: "التصنيفات",
+      href: "/admin/categories",
+      icon: Layers,
+      roles: ["OWNER", "STAFF"],
+    },
+    {
       label: "المخزون",
       href: "/admin/inventory",
       icon: Warehouse,
@@ -99,19 +106,20 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
   ];
 
   return (
-    <aside className="w-64 bg-[#111111] border-l border-neutral-800 flex flex-col justify-between shrink-0 h-screen sticky top-0 font-sans z-30 select-none">
+    <aside className="w-72 bg-[#0a0a0a] border-l border-neutral-800/60 flex flex-col justify-between shrink-0 h-screen sticky top-0 font-sans z-30 select-none">
       
       {/* Brand Header */}
       <div>
-        <div className="p-6 border-b border-neutral-800 flex items-center justify-between">
+        <div className="p-6 border-b border-neutral-800/60 flex items-center justify-between bg-gradient-to-b from-neutral-900/50 to-transparent">
           <div>
             <Link
               href="/admin"
-              className="font-serif text-2xl font-bold tracking-[0.2em] text-white hover:opacity-90 transition block"
+              className="font-serif text-3xl font-bold tracking-[0.3em] text-white hover:text-champagne transition-all duration-300 block relative group"
             >
               FATEKIT
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-champagne group-hover:w-full transition-all duration-500 ease-luxury" />
             </Link>
-            <span className="text-[10px] uppercase font-bold tracking-widest text-neutral-400 mt-0.5 block">
+            <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-champagne mt-2 block">
               لوحة الإدارة الفاخرة
             </span>
           </div>
@@ -120,31 +128,32 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
             href="/"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
+            className="p-2 text-neutral-400 hover:text-champagne hover:bg-neutral-800/50 transition-all duration-300 rounded-lg"
             title="زيارة واجهة المتجر"
           >
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
           </a>
         </div>
 
         {/* User Card Summary */}
-        <div className="px-5 py-4 border-b border-neutral-800/80 bg-neutral-900/40">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-neutral-800 border border-neutral-700 text-white flex items-center justify-center font-serif font-bold text-sm">
+        <div className="px-5 py-5 border-b border-neutral-800/40 bg-gradient-to-r from-neutral-900/30 to-transparent">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-champagne/20 to-champagne/5 border border-champagne/30 text-champagne flex items-center justify-center font-serif font-bold text-lg shadow-lg">
               {user.name.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-white truncate">{user.name}</p>
-              <div className="flex items-center gap-1.5 mt-0.5">
+              <p className="text-sm font-semibold text-white truncate tracking-tight">{user.name}</p>
+              <p className="text-[10px] text-neutral-400 font-mono mt-0.5 truncate">{user.email}</p>
+              <div className="flex items-center gap-1.5 mt-2">
                 {user.role === "OWNER" ? (
-                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-neutral-800 border border-neutral-700 text-champagne text-[9px] font-bold">
-                    <Shield className="w-2.5 h-2.5" />
-                    مالك المتجر (OWNER)
+                  <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-gradient-to-r from-champagne/10 to-transparent border border-champagne/30 text-champagne text-[9px] font-bold tracking-wider uppercase">
+                    <Shield className="w-3 h-3" strokeWidth={2} />
+                    مالك المتجر
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-neutral-800 border border-neutral-700 text-neutral-300 text-[9px] font-bold">
-                    <UserCheck className="w-2.5 h-2.5" />
-                    فريق العمل (STAFF)
+                  <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-neutral-800/50 border border-neutral-700 text-neutral-300 text-[9px] font-bold tracking-wider uppercase">
+                    <UserCheck className="w-3 h-3" strokeWidth={2} />
+                    فريق العمل
                   </span>
                 )}
               </div>
@@ -153,7 +162,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
         </div>
 
         {/* Nav Links */}
-        <nav className="p-3 space-y-1">
+        <nav className="p-4 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -167,14 +176,14 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
               return (
                 <div
                   key={item.href}
-                  className="flex items-center justify-between px-3 py-2.5 text-xs text-neutral-600 cursor-not-allowed opacity-50"
+                  className="flex items-center justify-between px-4 py-3 text-xs text-neutral-600 cursor-not-allowed opacity-40"
                   title="يتطلب صلاحية المالك (OWNER)"
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4" strokeWidth={1.5} />
                     <span>{item.label}</span>
                   </div>
-                  <span className="text-[9px] bg-neutral-900 border border-neutral-800 px-1 py-0.5">
+                  <span className="text-[9px] bg-neutral-900/50 border border-neutral-800 px-2 py-0.5 tracking-wider">
                     المالك فقط
                   </span>
                 </div>
@@ -185,18 +194,22 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center justify-between px-3.5 py-2.5 text-xs font-medium transition-colors duration-200 ${
+                className={`flex items-center justify-between px-4 py-3 text-xs font-medium transition-all duration-300 ease-luxury relative group ${
                   isActive
-                    ? "bg-white text-black font-semibold shadow-xs"
-                    : "text-neutral-300 hover:bg-neutral-800 hover:text-white"
+                    ? "bg-gradient-to-l from-white/5 to-transparent text-white border-r-2 border-champagne"
+                    : "text-neutral-400 hover:bg-neutral-800/40 hover:text-white border-r-2 border-transparent"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <span>{item.label}</span>
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-champagne" : ""}`} strokeWidth={1.5} />
+                  <span className="tracking-wide">{item.label}</span>
                 </div>
                 {item.ownerBadge && user.role === "OWNER" && (
-                  <span className={`text-[8px] uppercase tracking-wider px-1 font-bold ${isActive ? "bg-black text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                  <span className={`text-[8px] uppercase tracking-[0.2em] px-2 py-0.5 font-bold rounded-sm ${
+                    isActive 
+                      ? "bg-champagne text-primary" 
+                      : "bg-neutral-800 text-neutral-500 group-hover:bg-neutral-700 group-hover:text-neutral-300"
+                  }`}>
                     PRO
                   </span>
                 )}
@@ -207,13 +220,13 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
       </div>
 
       {/* Footer / Logout */}
-      <div className="p-4 border-t border-neutral-800 bg-[#0e0e0e]">
+      <div className="p-4 border-t border-neutral-800/60 bg-gradient-to-t from-neutral-900/50 to-transparent">
         <button
           onClick={handleLogout}
           type="button"
-          className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 border border-red-900/30 transition-colors duration-200"
+          className="w-full flex items-center justify-center gap-2.5 px-4 py-3 text-xs font-semibold text-red-400 hover:bg-red-950/30 hover:text-red-300 border border-red-900/20 hover:border-red-900/40 transition-all duration-300 rounded-sm group"
         >
-          <LogOut className="w-3.5 h-3.5" />
+          <LogOut className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={1.5} />
           <span>تسجيل الخروج</span>
         </button>
       </div>

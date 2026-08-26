@@ -9,22 +9,6 @@ import { useCart } from "@/components/store/CartContext";
 import { createOrderAction } from "@/lib/actions/orders";
 import { validateCouponAction } from "@/lib/actions/coupons";
 
-const PALESTINIAN_CITIES = [
-  "القدس",
-  "رام الله والبيرة",
-  "نابلس",
-  "الخليل",
-  "بيت لحم",
-  "جنين",
-  "طولكرم",
-  "قلقيلية",
-  "أريحا والأغوار",
-  "سلفيت",
-  "طوباس",
-  "الداخل (أراضي 48)",
-  "أخرى",
-];
-
 export default function CheckoutPage() {
   const router = useRouter();
   const {
@@ -36,13 +20,14 @@ export default function CheckoutPage() {
     appliedCoupon,
     setCoupon,
     clearCart,
+    deliveryAreas,
   } = useCart();
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [city, setCity] = useState("رام الله والبيرة");
+  const [city, setCity] = useState(deliveryAreas[0] || "رام الله والبيرة");
   const [deliveryNotes, setDeliveryNotes] = useState("");
 
   const [fieldErrors, setFieldErrors] = useState<{
@@ -303,7 +288,7 @@ export default function CheckoutPage() {
                       onChange={(e) => setCity(e.target.value)}
                       className="w-full bg-neutral-50 border border-neutral-300 px-4 py-3 text-sm focus:outline-none focus:border-black focus:bg-white transition"
                     >
-                      {PALESTINIAN_CITIES.map((c) => (
+                      {(deliveryAreas.length > 0 ? deliveryAreas : ["رام الله والبيرة"]).map((c) => (
                         <option key={c} value={c}>
                           {c}
                         </option>

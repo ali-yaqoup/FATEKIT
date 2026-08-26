@@ -1,16 +1,13 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { OrderStatus, CouponType } from "@prisma/client";
+import { OrderStatus, CouponType, ProductStatus } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 import { AdminRole } from "@prisma/client";
 
 export interface CheckoutItemInput {
   productId: string;
   variantId?: string;
-  productName: string;
-  variantName?: string;
-  unitPrice: number;
   quantity: number;
 }
 
@@ -44,15 +41,106 @@ export async function createOrderAction(input: CheckoutInput) {
       return { success: false, error: "سلة المشتريات فارغة، لا يمكن إتمام الطلب" };
     }
 
+    // Validate quantities up front
+    for (const item of input.items) {
+      if (!Number.isInteger(item.quantity) || item.quantity <= 0) {
+        return { success: false, error: "الكمية المطلوبة غير صحيحة." };
+      }
+    }
+
     const cleanPhone = input.customerPhone.trim();
     const cleanName = input.customerName.trim();
     const cleanEmail = input.customerEmail?.trim() || null;
 
-    // Calculate subtotal from line items
-    const subtotal = input.items.reduce(
-      (sum, item) => sum + Number(item.unitPrice) * item.quantity,
-      0
-    );
+    // ============================================================
+    // SECURITY: Never trust client-supplied pricing or names.
+    // Fetch the authoritative Product & ProductVariant records and
+    // use the database values for unit price and snapshot names.
+    // ============================================================
+
+    const productIds = [...new Set(input.items.map((i) => i.productId))];
+    const variantIds = [
+      ...new Set(
+        input.items
+          .map((i) => i.variantId)
+          .filter((v): v is string => Boolean(v))
+      ),
+    ];
+
+    const [products, variants] = await Promise.all([
+      db.product.findMany({ where: { id: { in: productIds } } }),
+      variantIds.length > 0
+        ? db.productVariant.findMany({ where: { id: { in: variantIds } } })
+        : Promise.resolve([]),
+    ]);
+
+    const productMap = new Map(products.map((p) => [p.id, p]));
+    const variantMap = new Map(variants.map((v) => [v.id, v]));
+
+    // Resolve each line item against the database (authoritative data)
+    const resolvedItems: {
+      productId: string;
+      variantId: string | null;
+      productName: string;
+      variantName: string | null;
+      unitPrice: number;
+      quantity: number;
+      total: number;
+    }[] = [];
+
+    for (const item of input.items) {
+      const product = productMap.get(item.productId);
+
+      if (!product) {
+        return { success: false, error: "أحد المنتجات المطلوبة غير موجود." };
+      }
+      if (product.isArchived) {
+        return { success: false, error: `عذراً، المنتج (${product.name}) لم يعد متوفراً.` };
+      }
+      if (product.status !== ProductStatus.ACTIVE) {
+        return { success: false, error: `عذراً، المنتج (${product.name}) غير متوفر حالياً.` };
+      }
+
+      if (item.variantId) {
+        const variant = variantMap.get(item.variantId);
+
+        if (!variant) {
+          return { success: false, error: "أحد الدرجات المطلوبة غير موجودة." };
+        }
+        if (variant.productId !== product.id) {
+          return { success: false, error: "الدرجة المحددة لا تنتمي إلى المنتج المطلوب." };
+        }
+
+        const unitPrice =
+          variant.price !== null && variant.price !== undefined
+            ? Number(variant.price)
+            : Number(product.price);
+
+        resolvedItems.push({
+          productId: product.id,
+          variantId: variant.id,
+          productName: product.name,
+          variantName: variant.name,
+          unitPrice,
+          quantity: item.quantity,
+          total: unitPrice * item.quantity,
+        });
+      } else {
+        const unitPrice = Number(product.price);
+        resolvedItems.push({
+          productId: product.id,
+          variantId: null,
+          productName: product.name,
+          variantName: null,
+          unitPrice,
+          quantity: item.quantity,
+          total: unitPrice * item.quantity,
+        });
+      }
+    }
+
+    // Calculate subtotal from authoritative DB prices
+    const subtotal = resolvedItems.reduce((sum, item) => sum + item.total, 0);
 
     if (subtotal <= 0) {
       return { success: false, error: "قيمة المشتريات غير صحيحة" };
@@ -64,7 +152,7 @@ export async function createOrderAction(input: CheckoutInput) {
     const freeShippingMin = settings?.freeShippingMinimum ? Number(settings.freeShippingMinimum) : 350;
     const shippingFee = subtotal >= freeShippingMin ? 0 : standardFee;
 
-    // Validate coupon if provided
+    // Validate coupon if provided (using authoritative subtotal)
     let discount = 0;
     let couponId: string | null = null;
 
@@ -132,7 +220,7 @@ export async function createOrderAction(input: CheckoutInput) {
           });
         }
 
-        // 2. Create Order record with line items
+        // 2. Create Order record with line items (authoritative snapshots)
         const order = await tx.order.create({
           data: {
             orderNumber,
@@ -148,21 +236,21 @@ export async function createOrderAction(input: CheckoutInput) {
             paymentMethod: "COD", // Always Cash on Delivery
             couponId,
             items: {
-              create: input.items.map((item) => ({
+              create: resolvedItems.map((item) => ({
                 productId: item.productId,
-                variantId: item.variantId || null,
+                variantId: item.variantId,
                 productNameSnapshot: item.productName,
-                variantNameSnapshot: item.variantName || null,
-                unitPrice: Number(item.unitPrice),
+                variantNameSnapshot: item.variantName,
+                unitPrice: item.unitPrice,
                 quantity: item.quantity,
-                total: Number(item.unitPrice) * item.quantity,
+                total: item.total,
               })),
             },
           },
         });
 
-        // 3. Validate & Decrement Inventory per item
-        for (const item of input.items) {
+        // 3. Validate & Decrement Inventory per item (re-check stock atomically)
+        for (const item of resolvedItems) {
           if (item.variantId) {
             const variant = await tx.productVariant.findUnique({
               where: { id: item.variantId },

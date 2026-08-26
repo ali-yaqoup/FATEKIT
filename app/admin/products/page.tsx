@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { Package, CheckCircle2, AlertTriangle, XCircle, ExternalLink } from "lucide-react";
+import { Package, CheckCircle2, AlertTriangle, XCircle, ExternalLink, Trash2, Edit, Plus } from "lucide-react";
 import { AdminRole } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 import { ProductRowForm } from "./ProductRowForm";
+import { deleteProductImageAction } from "./actions";
 
 
 export default async function AdminProductsPage() {
@@ -15,7 +16,7 @@ export default async function AdminProductsPage() {
     orderBy: { createdAt: "desc" },
     include: {
       category: true,
-      images: { orderBy: { sortOrder: "asc" }, take: 1 },
+      images: { orderBy: { sortOrder: "asc" } },
       variants: true,
     },
   });
@@ -29,6 +30,13 @@ export default async function AdminProductsPage() {
             إجمالي {products.length} منتج مسجل في المتجر
           </p>
         </div>
+        <Link
+          href="/admin/products/new"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-champagne text-primary text-xs font-bold uppercase tracking-wider hover:bg-champagne/90 transition"
+        >
+          <Plus className="w-4 h-4" />
+          إضافة منتج جديد
+        </Link>
       </div>
 
       <div className="bg-[#141414] border border-neutral-800 overflow-hidden">
@@ -42,6 +50,7 @@ export default async function AdminProductsPage() {
                 <th className="p-4">الدرجات / الألوان</th>
                 <th className="p-4">المخزون الإجمالي</th>
                 <th className="p-4">الحالة</th>
+                <th className="p-4 text-center">الصور</th>
                 <th className="p-4 text-center">تحديث</th>
                 <th className="p-4 text-center">المتجر</th>
               </tr>
@@ -60,6 +69,9 @@ export default async function AdminProductsPage() {
                         <div>
                           <p className="font-bold text-white text-sm">{product.name}</p>
                           <p className="text-[11px] text-neutral-400 font-mono">{product.sku || "NO-SKU"}</p>
+                          <Link href={`/admin/products/${product.id}`} className="text-[11px] text-champagne hover:text-white">
+                            تعديل كامل
+                          </Link>
                         </div>
                       </div>
                     </td>
@@ -68,6 +80,23 @@ export default async function AdminProductsPage() {
                     </td>
                     
                     <ProductRowForm product={product} />
+
+                    <td className="p-4 text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-neutral-400">{product.images.length} صور</span>
+                        {product.images.length > 0 && (
+                          <form action={deleteProductImageAction.bind(null, product.images[0].id)}>
+                            <button
+                              type="submit"
+                              className="text-red-400 hover:text-red-300 transition"
+                              title="حذف الصورة"
+                            >
+                              <Trash2 className="w-4 h-4" strokeWidth={1.5} />
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    </td>
 
                     <td className="p-4 text-center">
                       <Link

@@ -3,6 +3,7 @@ import { Tag, Check, X, Calendar } from "lucide-react";
 import { AdminRole } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 import { CreateCouponForm } from "./CreateCouponForm";
+import { CouponToggle } from "./CouponToggle";
 
 
 export default async function AdminCouponsPage() {
@@ -59,15 +60,7 @@ export default async function AdminCouponsPage() {
                     {coupon.usageCount} {coupon.usageLimit ? `/ ${coupon.usageLimit}` : "مرة"}
                   </td>
                   <td className="p-4">
-                    <span
-                      className={`inline-flex items-center px-2 py-0.5 text-[10px] font-semibold border ${
-                        coupon.isActive
-                          ? "bg-emerald-950/80 text-emerald-300 border-emerald-800/60"
-                          : "bg-neutral-900 text-neutral-500 border-neutral-800"
-                      }`}
-                    >
-                      {coupon.isActive ? "نشط ومتاح" : "معطل"}
-                    </span>
+                    <CouponToggle id={coupon.id} isActive={coupon.isActive} />
                   </td>
                 </tr>
               ))}

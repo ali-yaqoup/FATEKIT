@@ -1,8 +1,7 @@
 import { AdminRole } from "@prisma/client";
+import { SESSION_COOKIE_NAME, getSessionSecret } from "@/lib/session-secret";
 
-export const SESSION_COOKIE_NAME = "fatekit_admin_session";
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET;
-const MINIMUM_SESSION_SECRET_LENGTH = 32;
+export { SESSION_COOKIE_NAME };
 
 export interface AdminSessionPayload {
   id: string;
@@ -10,14 +9,6 @@ export interface AdminSessionPayload {
   name: string;
   role: AdminRole;
   exp: number;
-}
-
-function getSessionSecret(): string {
-  if (!SESSION_SECRET || SESSION_SECRET.length < MINIMUM_SESSION_SECRET_LENGTH) {
-    return "fallback_default_development_secret_that_is_32_characters_long";
-  }
-
-  return SESSION_SECRET;
 }
 
 // Simple & robust Web Crypto HMAC-SHA256 token encoding/decoding

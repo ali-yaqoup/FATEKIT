@@ -2,6 +2,7 @@ import { AdminRole } from "@prisma/client";
 import { AlertTriangle, PackageSearch } from "lucide-react";
 import { requireAdminRole } from "@/lib/actions/auth";
 import { db } from "@/lib/db";
+import { InventoryQtyForm } from "./InventoryQtyForm";
 
 
 const LOW_STOCK_THRESHOLD = 5;
@@ -14,6 +15,8 @@ type InventoryItem = {
   variantName: string | null;
   quantity: number;
   isActive: boolean;
+  productId?: string;
+  variantId?: string;
 };
 
 export default async function AdminInventoryPage() {
@@ -39,6 +42,8 @@ export default async function AdminInventoryPage() {
           variantName: null,
           quantity: product.quantity ?? 0,
           isActive: product.status === "ACTIVE",
+          productId: product.id,
+          variantId: undefined,
         }];
       }
 
@@ -50,6 +55,8 @@ export default async function AdminInventoryPage() {
         variantName: variant.name,
         quantity: variant.quantity,
         isActive: product.status === "ACTIVE",
+        productId: product.id,
+        variantId: variant.id,
       }));
     })
     .sort((first, second) => first.quantity - second.quantity);
@@ -110,7 +117,13 @@ export default async function AdminInventoryPage() {
                       <td className="p-4 text-neutral-300">{item.categoryName}</td>
                       <td className="p-4 text-neutral-300">{item.variantName || "بدون درجة"}</td>
                       <td className="p-4 font-mono text-neutral-400">{item.sku || "—"}</td>
-                      <td className={`p-4 font-mono font-bold ${stockClass}`}>{item.quantity}</td>
+                      <td className="p-4">
+                        <InventoryQtyForm
+                          productId={item.productId}
+                          variantId={item.variantId}
+                          quantity={item.quantity}
+                        />
+                      </td>
                       <td className="p-4">
                         <span className={`inline-flex items-center gap-1.5 px-2 py-1 border text-[10px] font-semibold ${stockClass} border-neutral-700`}>
                           <PackageSearch className="w-3 h-3" />
