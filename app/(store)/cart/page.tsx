@@ -54,7 +54,7 @@ export default function CartPage() {
 
   return (
     <div className="bg-background text-on-background min-h-screen">
-      <main className="max-w-container mx-auto px-6 md:px-16 py-12 md:py-20">
+      <main className="store-container py-10 md:py-16 lg:py-20">
         
         {/* Page Title & Breadcrumbs */}
         <div className="mb-10 text-center md:text-right">
@@ -85,7 +85,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors duration-300 shadow-xs"
+              className="store-btn-primary"
             >
               <span>تصفحي المتجر</span>
               <ArrowLeft className="w-4 h-4" />
@@ -290,7 +290,7 @@ export default function CartPage() {
 
                 <Link
                   href="/checkout"
-                  className="w-full bg-black text-white text-center py-4 font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition block shadow-sm"
+                  className="w-full bg-primary text-ivory text-center py-4 font-sans text-sm font-semibold hover:bg-secondary transition block rounded-full"
                 >
                   الانتقال للدفع وتأكيد الطلب
                 </Link>

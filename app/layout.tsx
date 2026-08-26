@@ -1,18 +1,37 @@
 import type { Metadata } from "next";
-import { Playfair_Display, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Amiri, Cormorant_Garamond, IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cormorant",
   display: "swap",
+  preload: true,
 });
 
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-amiri",
+  display: "swap",
+  preload: true,
+});
+
+const ibmPlex = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm-plex-arabic",
+  variable: "--font-ibm-plex",
   display: "swap",
+  preload: true,
+});
+
+const notoArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-noto-arabic",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -50,8 +69,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${playfair.variable} ${ibmPlexArabic.variable}`} suppressHydrationWarning>
-      <body className="bg-background text-on-background antialiased min-h-screen" suppressHydrationWarning>
+    <html
+      lang="ar"
+      dir="rtl"
+      className={`${cormorant.variable} ${amiri.variable} ${ibmPlex.variable} ${notoArabic.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="bg-background text-on-background font-sans antialiased min-h-screen" suppressHydrationWarning>
         {children}
       </body>
     </html>

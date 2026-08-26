@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, Filter, X } from "lucide-react";
 import { db } from "@/lib/db";
 import { SortSelect } from "@/components/store/SortSelect";
+import { ProductCard } from "@/components/store/ProductCard";
 
 
 interface ShopPageProps {
@@ -13,6 +13,7 @@ interface ShopPageProps {
     maxPrice?: string;
     sort?: string;
     page?: string;
+    search?: string;
   }>;
 }
 
@@ -24,6 +25,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const sort = params.sort || "newest";
   const currentPage = parseInt(params.page || "1", 10);
   const pageSize = 12;
+  const searchQuery = params.search;
 
   // 1. Fetch categories
   const categories = await db.category.findMany({
@@ -60,6 +62,15 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     if (maxPrice !== undefined && !isNaN(maxPrice)) where.price.lte = maxPrice;
   }
 
+  // Add search filter
+  if (searchQuery && searchQuery.trim()) {
+    where.OR = [
+      { name: { contains: searchQuery, mode: "insensitive" } },
+      { description: { contains: searchQuery, mode: "insensitive" } },
+      { brand: { contains: searchQuery, mode: "insensitive" } },
+    ];
+  }
+
   // 3. Build orderBy
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let orderBy: any = { createdAt: "desc" };
@@ -84,63 +95,80 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
   // Selected Category Title
   const activeCategoryObj = categories.find((c) => c.slug === selectedCategorySlug);
-  const pageTitle = activeCategoryObj ? activeCategoryObj.name : "المكياج";
+  const pageTitle = activeCategoryObj ? activeCategoryObj.name : (searchQuery ? `نتائج البحث: "${searchQuery}"` : "المكياج");
 
   return (
     <div className="bg-background text-on-background min-h-screen">
-      {/* Header & Breadcrumbs matching fatekit_1 */}
-      <div className="px-6 md:px-16 py-12 md:py-16 text-center border-b border-neutral-200 bg-white">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 text-black">
-          {pageTitle}
-        </h1>
-        <nav className="flex justify-center items-center gap-2 font-sans text-xs text-neutral-500">
-          <Link href="/" className="hover:text-black transition">
-            الرئيسية
-          </Link>
-          <span>/</span>
-          <span className="text-black font-medium">{pageTitle}</span>
-        </nav>
+      <div className="bg-blush/40 border-b border-outline-variant/70">
+        <div className="store-container py-12 md:py-16 text-center">
+          <div className="max-w-3xl mx-auto space-y-3">
+            <p className="store-label">المتجر</p>
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-primary">
+              {pageTitle}
+            </h1>
+            <nav className="flex justify-center items-center gap-3 font-sans text-xs text-on-surface-variant">
+              <Link href="/" className="hover:text-secondary transition-colors">
+                الرئيسية
+              </Link>
+              <span className="text-outline">/</span>
+              <span className="text-primary font-medium">{pageTitle}</span>
+            </nav>
+          </div>
+        </div>
       </div>
 
-      <div className="px-6 md:px-16 py-16 max-w-container mx-auto">
-        <div className="flex flex-col md:flex-row gap-10">
-          {/* Sidebar Filters */}
-          <aside className="w-full md:w-64 flex-shrink-0">
-            <div className="sticky top-28 space-y-8">
+      <div className="store-container py-16 md:py-20">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Premium Sidebar Filters */}
+          <aside className="w-full lg:w-72 flex-shrink-0">
+            <div className="sticky top-32 space-y-10">
               {/* Category Filter */}
-              <div className="border-b border-neutral-200 pb-6">
-                <h3 className="font-sans text-xs font-semibold uppercase tracking-wider mb-4 text-black">
-                  التصنيف
-                </h3>
-                <ul className="space-y-3 font-sans text-sm text-neutral-600">
+              <div className="border-b border-neutral-200/60 pb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                    التصنيف
+                  </h3>
+                  <Filter className="w-4 h-4 text-neutral-400" strokeWidth={1.5} />
+                </div>
+                <ul className="space-y-4 font-sans text-sm">
                   <li>
                     <Link
-                      href="/shop"
-                      className={`block hover:text-black transition ${
-                        !selectedCategorySlug ? "font-semibold text-black underline" : ""
+                      href={`/shop${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`}
+                      className={`block hover:text-primary transition-all duration-300 group ${
+                        !selectedCategorySlug ? "font-semibold text-primary" : "text-neutral-600"
                       }`}
                     >
-                      الكل
+                      <span className="flex items-center justify-between">
+                        <span>الكل</span>
+                        {!selectedCategorySlug && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                        )}
+                      </span>
                     </Link>
                   </li>
                   {parentCategories.map((parent) => (
-                    <li key={parent.id} className="space-y-2">
+                    <li key={parent.id} className="space-y-3">
                       <Link
-                        href={`/shop/${parent.slug}`}
-                        className={`block hover:text-black transition ${
-                          selectedCategorySlug === parent.slug ? "font-semibold text-black underline" : ""
+                        href={`/shop/${parent.slug}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`}
+                        className={`block hover:text-primary transition-all duration-300 group ${
+                          selectedCategorySlug === parent.slug ? "font-semibold text-primary" : "text-neutral-600"
                         }`}
                       >
-                        {parent.name}
+                        <span className="flex items-center justify-between">
+                          <span>{parent.name}</span>
+                          {selectedCategorySlug === parent.slug && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                          )}
+                        </span>
                       </Link>
                       {parent.children.length > 0 && (
-                        <ul className="pr-4 space-y-1.5 border-r border-neutral-200 text-xs text-neutral-500">
+                        <ul className="pr-4 space-y-2 border-r border-neutral-200/60 text-xs">
                           {parent.children.map((child) => (
                             <li key={child.id}>
                               <Link
-                                href={`/shop/${child.slug}`}
-                                className={`hover:text-black transition ${
-                                  selectedCategorySlug === child.slug ? "font-semibold text-black" : ""
+                                href={`/shop/${child.slug}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`}
+                                className={`hover:text-primary transition-all duration-300 ${
+                                  selectedCategorySlug === child.slug ? "font-semibold text-primary" : "text-neutral-500"
                                 }`}
                               >
                                 {child.name}
@@ -155,44 +183,54 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               </div>
 
               {/* Brand Filter */}
-              <div className="border-b border-neutral-200 pb-6">
-                <h3 className="font-sans text-xs font-semibold uppercase tracking-wider mb-4 text-black">
+              <div className="border-b border-neutral-200/60 pb-8">
+                <h3 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">
                   الماركة
                 </h3>
-                <ul className="space-y-3 font-sans text-sm text-neutral-600">
-                  <li className="font-medium text-black">FATEKIT (الكل)</li>
+                <ul className="space-y-4 font-sans text-sm">
+                  <li className="font-semibold text-primary flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                    FATEKIT (الكل)
+                  </li>
                 </ul>
               </div>
 
               {/* Price Filter */}
-              <div className="border-b border-neutral-200 pb-6">
-                <h3 className="font-sans text-xs font-semibold uppercase tracking-widest mb-4 text-black">
+              <div className="border-b border-neutral-200/60 pb-8">
+                <h3 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">
                   السعر (₪)
                 </h3>
-                <form action="/shop" method="GET" className="space-y-3">
+                <form action="/shop" method="GET" className="space-y-4">
                   {selectedCategorySlug && (
                     <input type="hidden" name="category" value={selectedCategorySlug} />
                   )}
-                  <div className="flex items-center gap-2">
-                    <input
-                      name="minPrice"
-                      defaultValue={minPrice ?? ""}
-                      placeholder="من"
-                      type="number"
-                      className="w-full bg-white border border-neutral-300 focus:outline-none focus:border-black font-sans text-xs p-2 text-center"
-                    />
-                    <span className="text-neutral-400">-</span>
-                    <input
-                      name="maxPrice"
-                      defaultValue={maxPrice ?? ""}
-                      placeholder="إلى"
-                      type="number"
-                      className="w-full bg-white border border-neutral-300 focus:outline-none focus:border-black font-sans text-xs p-2 text-center"
-                    />
+                  {searchQuery && (
+                    <input type="hidden" name="search" value={searchQuery} />
+                  )}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <input
+                        name="minPrice"
+                        defaultValue={minPrice ?? ""}
+                        placeholder="من"
+                        type="number"
+                        className="w-full bg-white border border-neutral-200/60 focus:outline-none focus:border-champagne focus:ring-1 focus:ring-champagne/20 font-sans text-xs p-3 text-center transition-all duration-300"
+                      />
+                    </div>
+                    <span className="text-neutral-400 font-light">—</span>
+                    <div className="flex-1">
+                      <input
+                        name="maxPrice"
+                        defaultValue={maxPrice ?? ""}
+                        placeholder="إلى"
+                        type="number"
+                        className="w-full bg-white border border-neutral-200/60 focus:outline-none focus:border-champagne focus:ring-1 focus:ring-champagne/20 font-sans text-xs p-3 text-center transition-all duration-300"
+                      />
+                    </div>
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-black text-white py-2.5 text-xs uppercase font-semibold tracking-widest hover:bg-neutral-800 transition-colors duration-300 shadow-xs"
+                    className="w-full bg-primary text-ivory py-3 text-xs font-semibold tracking-wide rounded-full hover:bg-secondary transition-all duration-300"
                   >
                     تطبيق الفلتر
                   </button>
@@ -201,118 +239,99 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             </div>
           </aside>
 
-          {/* Main Product Section */}
+          {/* Premium Main Product Section */}
           <main className="flex-grow font-sans">
-            {/* Top Bar: Count & Sorting */}
-            <div className="flex justify-between items-center mb-8 pb-4 border-b border-neutral-200 text-xs text-neutral-500">
-              <span className="font-medium">
-                عرض {products.length > 0 ? (currentPage - 1) * pageSize + 1 : 0}-
-                {Math.min(currentPage * pageSize, totalCount)} من أصل {totalCount} منتج
-              </span>
+            {/* Premium Top Bar: Count & Sorting */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-neutral-200/60">
+              <div className="space-y-1">
+                <span className="font-medium text-sm text-neutral-700">
+                  عرض {products.length > 0 ? (currentPage - 1) * pageSize + 1 : 0}-
+                  {Math.min(currentPage * pageSize, totalCount)} من أصل <span className="font-bold text-primary">{totalCount}</span> منتج
+                </span>
+                <p className="text-xs text-neutral-400">تشكيلة فاخرة من أجود المنتجات</p>
+                {searchQuery && (
+                  <Link
+                    href="/shop"
+                    className="text-xs text-primary hover:text-primary/80 transition-colors"
+                  >
+                    مسح البحث
+                  </Link>
+                )}
+              </div>
 
               {/* Sort selector */}
-              <div className="flex items-center gap-2">
-                <label htmlFor="sort-select" className="hidden sm:inline font-medium">ترتيب حسب:</label>
+              <div className="flex items-center gap-3">
+                <label htmlFor="sort-select" className="text-xs font-medium text-neutral-600">ترتيب حسب:</label>
                 <SortSelect currentSort={sort} />
               </div>
             </div>
 
-            {/* Product Grid */}
+            {/* Premium Product Grid */}
             {products.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
-                {products.map((product) => {
-                  const imageUrl =
-                    product.images[0]?.url ||
-                    "https://picsum.photos/seed/placeholder/800/800";
-
-                  return (
-                    <Link
-                      key={product.id}
-                      href={`/product/${product.slug}`}
-                      className="group block text-right"
-                    >
-                      <div className="relative w-full aspect-[3/4] mb-4 bg-neutral-100 overflow-hidden border border-neutral-200">
-                        <Image
-                          src={imageUrl}
-                          alt={product.name}
-                          fill
-                          loading="lazy"
-                          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        {product.discountPercent && (
-                          <span className="absolute top-3 right-3 bg-black text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-1">
-                            خصم {product.discountPercent}%
-                          </span>
-                        )}
-                        <div className="absolute inset-x-0 bottom-0 bg-black text-white py-3.5 text-center text-xs uppercase tracking-widest font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
-                          عرض التفاصيل
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <h3 className="font-serif text-base font-medium text-neutral-900 group-hover:text-black transition-colors duration-200 mb-1 line-clamp-1">
-                          {product.name}
-                        </h3>
-                        <p className="font-sans text-xs text-neutral-400 mb-1.5 uppercase tracking-wider">
-                          {product.brand || "FATEKIT"}
-                        </p>
-                        <div className="flex items-center gap-2 font-sans font-bold text-sm text-black">
-                          <span>{Number(product.price).toFixed(2)} ₪</span>
-                          {Boolean(product.compareAtPrice) && (
-                            <span className="text-xs text-neutral-400 line-through font-normal">
-                              {Number(product.compareAtPrice).toFixed(2)} ₪
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
+                {products.map((product) => (
+                  <div key={product.id}>
+                    <ProductCard
+                      product={{
+                        ...product,
+                        price: Number(product.price),
+                        compareAtPrice: product.compareAtPrice != null ? Number(product.compareAtPrice) : undefined,
+                        brand: product.brand,
+                        images: product.images,
+                        isNew: product.isNew,
+                        isBestseller: product.isBestseller,
+                        discountPercent: product.discountPercent,
+                      }}
+                    />
+                  </div>
+                ))}
               </div>
             ) : (
-              <div className="py-20 text-center bg-white border border-neutral-200 p-12 space-y-5">
-                <div className="w-16 h-16 bg-neutral-100 border border-neutral-200 flex items-center justify-center mx-auto text-neutral-500">
+              <div className="py-20 text-center bg-ivory border border-outline-variant p-12 md:p-16 space-y-6 rounded-2xl">
+                <div className="w-16 h-16 bg-blush flex items-center justify-center mx-auto text-secondary rounded-full">
                   <span className="font-serif text-2xl font-bold">∅</span>
                 </div>
-                <div className="space-y-2 max-w-md mx-auto">
-                  <h3 className="font-serif text-2xl font-bold text-neutral-900">
+                <div className="space-y-3 max-w-md mx-auto">
+                  <h3 className="font-serif text-3xl font-bold text-primary">
                     لا توجد منتجات مطابقة
                   </h3>
-                  <p className="font-sans text-xs text-neutral-500 leading-relaxed">
-                    لم نتمكن من العثور على أي منتجات تطابق خيارات الفلترة أو نطاق الأسعار المحدد. جربي إعادة تعيين الفلاتر أو تصفح كافة التشكيلات.
+                  <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
+                    ما لقينا منتجات تطابق الفلتر أو نطاق السعر. جرّبي إعادة تعيين الفلاتر أو تصفّحي كل التشكيلة.
                   </p>
                 </div>
                 <div className="pt-2">
                   <Link
                     href="/shop"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors duration-300 shadow-xs"
+                    className="store-btn-primary"
                   >
+                    <X className="w-4 h-4" strokeWidth={2} />
                     إعادة تعيين كافة الفلاتر
                   </Link>
                 </div>
               </div>
             )}
 
-            {/* Pagination Controls */}
+            {/* Premium Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-16 flex justify-center items-center gap-2 border-t border-neutral-200 pt-8">
+              <div className="mt-20 flex justify-center items-center gap-3 border-t border-neutral-200/60 pt-10">
                 {currentPage > 1 && (
                   <Link
-                    href={`/shop?page=${currentPage - 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}`}
-                    className="w-10 h-10 border border-neutral-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors duration-200"
+                    href={`/shop?page=${currentPage - 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ""}`}
+                    className="w-12 h-12 border border-neutral-300 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 rounded-sm"
                     aria-label="الصفحة السابقة"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
                   </Link>
                 )}
 
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <Link
                     key={pageNum}
-                    href={`/shop?page=${pageNum}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}`}
-                    className={`w-10 h-10 border flex items-center justify-center font-sans text-xs font-semibold transition-colors duration-200 ${
+                    href={`/shop?page=${pageNum}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ""}`}
+                    className={`w-12 h-12 border flex items-center justify-center font-sans text-xs font-bold transition-all duration-300 rounded-sm ${
                       pageNum === currentPage
-                        ? "border-black bg-black text-white"
-                        : "border-neutral-300 hover:border-black text-neutral-700 hover:bg-neutral-50"
+                        ? "border-primary bg-primary text-white shadow-lg"
+                        : "border-neutral-300 hover:border-primary text-neutral-700 hover:bg-neutral-50"
                     }`}
                   >
                     {pageNum}
@@ -321,11 +340,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
                 {currentPage < totalPages && (
                   <Link
-                    href={`/shop?page=${currentPage + 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}`}
-                    className="w-10 h-10 border border-neutral-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors duration-200"
+                    href={`/shop?page=${currentPage + 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ""}`}
+                    className="w-12 h-12 border border-neutral-300 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 rounded-sm"
                     aria-label="الصفحة التالية"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
                   </Link>
                 )}
               </div>

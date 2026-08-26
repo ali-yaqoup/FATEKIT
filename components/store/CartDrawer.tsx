@@ -105,7 +105,7 @@ export function CartDrawer() {
 
       {/* Drawer Container (Sliding in from Left/Right) */}
       <div className="fixed inset-y-0 left-0 max-w-full flex pl-0 md:pl-10">
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between transform transition duration-300 ease-in-out border-r border-neutral-200">
+        <div className="w-screen max-w-md bg-ivory shadow-drawer flex flex-col justify-between h-full animate-slide-in-right">
           
           {/* Header */}
           <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-white sticky top-0 z-10">
@@ -343,14 +343,14 @@ export function CartDrawer() {
               <div className="space-y-2.5 pt-1">
                 <button
                   onClick={handleCheckoutClick}
-                  className="w-full py-4 bg-black text-white text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors duration-300 flex items-center justify-center gap-2 shadow-xs"
+                  className="w-full py-4 bg-primary text-ivory text-sm font-semibold hover:bg-secondary transition-colors duration-300 flex items-center justify-center gap-2 rounded-full"
                 >
                   <span>إتمام الطلب (الدفع عند الاستلام)</span>
                   <ArrowLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleViewCartClick}
-                  className="w-full py-3 bg-white border border-black text-black text-xs uppercase tracking-widest font-semibold hover:bg-neutral-100 transition-colors duration-300 text-center block"
+                  className="w-full py-3 bg-transparent border border-primary/20 text-primary text-sm font-semibold hover:bg-blush/40 transition-colors duration-300 text-center block rounded-full"
                 >
                   عرض سلة المشتريات بالتفصيل
                 </button>

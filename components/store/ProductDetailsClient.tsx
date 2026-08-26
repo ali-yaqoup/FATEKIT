@@ -103,7 +103,7 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
 
   return (
     <div className="bg-background text-on-background min-h-screen">
-      <main className="max-w-container mx-auto px-6 md:px-16 py-10 md:py-20">
+      <main className="store-container py-10 md:py-16 lg:py-20">
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-xs font-sans text-neutral-500 mb-10">
           <Link href="/" className="hover:text-black transition">
@@ -128,8 +128,8 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
                   <button
                     key={img.id}
                     onClick={() => setSelectedImageIndex(idx)}
-                    className={`w-full aspect-[3/4] relative border transition ${
-                      selectedImageIndex === idx ? "border-black border-2" : "border-neutral-200 opacity-70 hover:opacity-100"
+                    className={`w-full aspect-[3/4] relative overflow-hidden rounded-lg border transition ${
+                      selectedImageIndex === idx ? "border-primary border-2" : "border-outline-variant opacity-70 hover:opacity-100"
                     }`}
                   >
                     <Image
@@ -144,7 +144,7 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
             )}
 
             {/* Main Featured Image */}
-            <div className="flex-1 relative h-full border border-neutral-200 bg-neutral-100 overflow-hidden">
+            <div className="flex-1 relative h-full rounded-2xl bg-blush/30 overflow-hidden">
               <Image
                 src={images[selectedImageIndex]?.url || images[0].url}
                 alt={product.name}
@@ -153,7 +153,7 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
                 className="object-cover"
               />
               {product.discountPercent && (
-                <span className="absolute top-4 right-4 bg-black text-white text-xs uppercase font-bold px-3 py-1">
+                <span className="absolute top-4 right-4 bg-rose text-white text-xs font-medium px-3 py-1 rounded-full">
                   خصم {product.discountPercent}%
                 </span>
               )}
@@ -167,14 +167,14 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
               <span className="text-xs uppercase font-semibold text-neutral-500 tracking-wider">
                 {product.brand || "FATEKIT"}
               </span>
-              <h1 className="font-serif text-3xl md:text-5xl font-bold mt-1 text-black leading-tight">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mt-1 text-primary leading-[1.15] tracking-tight">
                 {product.name}
               </h1>
             </div>
 
             {/* Price */}
             <div className="mb-6 flex items-baseline gap-3">
-              <span className="font-serif text-3xl font-bold text-black">
+              <span className="font-serif text-3xl font-bold text-primary">
                 {currentPrice.toFixed(2)} ₪
               </span>
               {product.compareAtPrice && (
@@ -250,7 +250,7 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
             {/* Quantity Selector */}
             <div className="mb-6 flex items-center gap-4">
               <span className="text-xs font-semibold uppercase text-neutral-700">الكمية:</span>
-              <div className="flex items-center border border-black h-11 w-32">
+              <div className="flex items-center border border-outline-variant h-11 w-32 rounded-full overflow-hidden">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   className="w-10 h-full flex items-center justify-center hover:bg-neutral-100 font-bold transition text-lg"
@@ -274,11 +274,11 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
               <button
                 onClick={handleAddToCart}
                 disabled={currentStock <= 0}
-                className={`w-full py-4 font-sans text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs ${
+                className={`w-full py-4 font-sans text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-300 rounded-full ${
                   addedToCart
-                    ? "bg-emerald-800 text-white"
+                    ? "bg-emerald-700 text-white"
                     : currentStock > 0
-                    ? "bg-black text-white hover:bg-neutral-800"
+                    ? "bg-primary text-ivory hover:bg-secondary"
                     : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
                 }`}
               >
@@ -288,14 +288,14 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
 
               <Link
                 href="/cart"
-                className="w-full text-center py-3.5 border border-black text-black font-sans text-xs uppercase tracking-widest font-semibold hover:bg-neutral-100 transition-colors duration-300 block"
+                className="w-full text-center py-3.5 border border-primary/20 text-primary font-sans text-sm font-semibold hover:bg-blush/40 transition-colors duration-300 block rounded-full"
               >
                 عرض سلة المشتريات
               </Link>
             </div>
 
             {/* Cash on Delivery Badge */}
-            <div className="flex items-center gap-3 p-4 bg-neutral-100 border border-neutral-200 mb-10 text-xs font-medium text-neutral-800 font-sans">
+            <div className="flex items-center gap-3 p-4 bg-blush/50 rounded-xl mb-10 text-xs font-medium text-primary font-sans">
               <Truck className="w-5 h-5 text-black shrink-0" />
               <span>الدفع نقداً عند الاستلام متوفر لجميع المدن (COD ₪)</span>
             </div>
