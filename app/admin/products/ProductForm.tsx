@@ -17,6 +17,14 @@ interface CategoryOption {
   parentName?: string | null;
 }
 
+type VariantRow = {
+  id?: string;
+  name: string;
+  colorCode: string;
+  quantity: number;
+  price: string | number;
+};
+
 interface ProductFormProps {
   categories: CategoryOption[];
   product?: {
@@ -52,7 +60,7 @@ export function ProductForm({ categories, product }: ProductFormProps) {
   const submittingRef = useRef(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [variants, setVariants] = useState(
+  const [variants, setVariants] = useState<VariantRow[]>(
     product?.variants.map((variant) => ({
       id: variant.id,
       name: variant.name,

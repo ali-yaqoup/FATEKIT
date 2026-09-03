@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { AdminRole } from "@prisma/client";
 import { requireAdminRole } from "@/lib/actions/auth";
 import { db } from "@/lib/db";
-import { ProductForm } from "../../ProductForm";
+import { ProductForm } from "../ProductForm";
 
 export default async function EditProductPage({
   params,
