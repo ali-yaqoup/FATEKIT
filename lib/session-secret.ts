@@ -5,6 +5,11 @@ const DEV_FALLBACK_SECRET = "fallback_default_development_secret_that_is_32_char
 export function getSessionSecret(): string {
   const secret = process.env.ADMIN_SESSION_SECRET;
   if (!secret || secret.length < MINIMUM_SESSION_SECRET_LENGTH) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "ADMIN_SESSION_SECRET must be set to at least 32 characters in production."
+      );
+    }
     return DEV_FALLBACK_SECRET;
   }
   return secret;

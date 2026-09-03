@@ -69,7 +69,7 @@ export default function CartPage() {
             <span>/</span>
             <span className="text-black font-semibold">سلة المشتريات</span>
           </div>
-          <h1 className="font-serif text-3xl md:text-5xl font-bold tracking-tight text-black">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-black">
             سلة المشتريات
           </h1>
         </div>

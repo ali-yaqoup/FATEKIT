@@ -103,7 +103,7 @@ export function ProductCard({ product, priority = false, className }: ProductCar
 
         <button
           onClick={handleAddToCart}
-          className="absolute inset-x-3 bottom-3 z-20 flex items-center justify-center gap-2 py-2.5 bg-ivory/95 text-primary text-xs font-medium rounded-full shadow-soft opacity-100 translate-y-0 md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300 ease-luxury hover:bg-primary hover:text-ivory"
+          className="absolute inset-x-2 sm:inset-x-3 bottom-2 sm:bottom-3 z-20 flex items-center justify-center gap-1.5 py-2 sm:py-2.5 bg-ivory/95 text-primary text-[10px] sm:text-xs font-medium rounded-full shadow-soft opacity-100 translate-y-0 md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300 ease-luxury hover:bg-primary hover:text-ivory"
           aria-label="إضافة للسلة"
         >
           <Plus className="w-3.5 h-3.5" strokeWidth={2} />

@@ -132,7 +132,7 @@ export function ProductForm({ categories, product }: ProductFormProps) {
         </label>
         <label className="space-y-1 text-xs text-neutral-400">
           الماركة
-          <input name="brand" defaultValue={product?.brand || "FATEKIT"} className={inputClass} />
+          <input name="brand" defaultValue={product?.brand || ""} placeholder="مثال: Dior، MAC، Huda Beauty" className={inputClass} />
         </label>
         <label className="space-y-1 text-xs text-neutral-400">
           التصنيف
@@ -162,7 +162,13 @@ export function ProductForm({ categories, product }: ProductFormProps) {
         </label>
         <label className="space-y-1 text-xs text-neutral-400">
           SKU
-          <input name="sku" defaultValue={product?.sku || ""} className={inputClass} />
+          <span className="text-neutral-600"> — اختياري، يُولَّد تلقائياً إذا تُرك فارغاً</span>
+          <input
+            name="sku"
+            defaultValue={product?.sku || ""}
+            placeholder="يُولَّد تلقائياً"
+            className={inputClass}
+          />
         </label>
         <label className="space-y-1 text-xs text-neutral-400">
           المخزون (إذا ما في درجات)

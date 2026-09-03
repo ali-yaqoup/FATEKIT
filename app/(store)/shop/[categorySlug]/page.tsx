@@ -29,10 +29,10 @@ export async function generateMetadata(props: CategoryPageProps): Promise<Metada
 
   return {
     title: `مكياج ${category.name}`,
-    description: `تسوقي أفضل منتجات ${category.name} الفاخرة من FATEKIT. توصيل لجميع المدن ودفع عند الاستلام.`,
+    description: `تسوقي ${category.name} من براندات عالمية مختارة في FATEKIT. توصيل لجميع المدن ودفع عند الاستلام.`,
     openGraph: {
-      title: `مكياج ${category.name} | FATEKIT`,
-      description: `تسوقي أفضل منتجات ${category.name} الفاخرة من FATEKIT.`,
+      title: `${category.name} | FATEKIT`,
+      description: `تسوقي ${category.name} من براندات عالمية مختارة في متجر FATEKIT.`,
     },
   };
 }

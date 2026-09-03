@@ -115,7 +115,7 @@ function AdminLoginContent() {
                     setEmail(e.target.value);
                     if (emailError) setEmailError(null);
                   }}
-                  placeholder="admin@fatekit.com"
+                  placeholder="you@example.com"
                   className={`w-full bg-[#1c1c1c] border px-4 py-3 pl-10 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-white transition dir-ltr text-right ${
                     emailError ? "border-red-500" : "border-neutral-800"
                   }`}
@@ -183,14 +183,6 @@ function AdminLoginContent() {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Credentials Info for Testing */}
-          <div className="pt-3 border-t border-neutral-800/80 text-center">
-            <div className="bg-neutral-900/60 p-3 border border-neutral-800/50 text-[11px] text-neutral-400 space-y-1">
-              <p className="text-neutral-300 font-semibold">حساب الأدمن التجريبي (Seed Demo):</p>
-              <p className="dir-ltr font-mono text-[10px] text-neutral-400">admin@fatekit.com • admin123</p>
-            </div>
-          </div>
         </div>
 
         {/* Back to store link */}

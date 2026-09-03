@@ -10,14 +10,21 @@ async function runAdminAuthTest() {
   console.log("🔐 Testing Admin Authentication & Protection");
   console.log("=================================================\n");
 
+  const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminEmail || !adminPassword) {
+    throw new Error("Set ADMIN_EMAIL and ADMIN_PASSWORD before running this test.");
+  }
+
   // 1. Verify admin user exists in DB
   console.log("1️⃣ Checking AdminUser table in Database...");
   const adminInDb = await prisma.adminUser.findUnique({
-    where: { email: "admin@fatekit.com" },
+    where: { email: adminEmail },
   });
 
   if (!adminInDb) {
-    throw new Error("Seed admin user (admin@fatekit.com) not found in DB!");
+    throw new Error(`Admin user (${adminEmail}) not found in DB!`);
   }
 
   console.log(`✓ Admin User found: ID=${adminInDb.id}, Email=${adminInDb.email}, Name=${adminInDb.name}, Role=${adminInDb.role}`);
@@ -26,20 +33,20 @@ async function runAdminAuthTest() {
   console.log("\n2️⃣ Testing Invalid Login Scenarios...");
 
   // Non-existent email
-  const nonExistentRes = await loginAdminAction("nonexistent@domain.com", "admin123");
+  const nonExistentRes = await loginAdminAction("nonexistent@domain.com", adminPassword);
   console.log(`✓ Non-existent email login: success=${nonExistentRes.success}, error="${nonExistentRes.error}"`);
 
   // Wrong password
-  const wrongPasswordRes = await loginAdminAction("admin@fatekit.com", "wrongpassword");
+  const wrongPasswordRes = await loginAdminAction(adminEmail, "wrongpassword");
   console.log(`✓ Wrong password login: success=${wrongPasswordRes.success}, error="${wrongPasswordRes.error}"`);
 
   // Empty credentials
   const emptyRes = await loginAdminAction("", "");
   console.log(`✓ Empty fields login: success=${emptyRes.success}, error="${emptyRes.error}"`);
 
-  // 3. Test Successful Login with Seed Credentials
-  console.log("\n3️⃣ Testing Successful Login with Seed Credentials (admin@fatekit.com / admin123)...");
-  const validLoginRes = await loginAdminAction("admin@fatekit.com", "admin123");
+  // 3. Test Successful Login with configured credentials
+  console.log("\n3️⃣ Testing Successful Login with ADMIN_EMAIL / ADMIN_PASSWORD...");
+  const validLoginRes = await loginAdminAction(adminEmail, adminPassword);
 
   if (!validLoginRes.success || !validLoginRes.user) {
     throw new Error(`Valid login failed: ${validLoginRes.error}`);

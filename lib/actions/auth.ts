@@ -22,12 +22,11 @@ export async function loginAdminAction(emailInput: string, passwordInput: string
       where: { email },
     });
 
-    if (!admin) {
-      return { success: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة." };
-    }
-
-    const isMatch = bcrypt.compareSync(password, admin.passwordHash);
-    if (!isMatch) {
+    // Dummy hash so missing users take roughly the same time as a real compare.
+    const DUMMY_HASH =
+      "$2b$12$BQnYOgQjnSy44Hh1oDFd1uQSoYYUyr5aLvr3k7zIm449qepuLvtmq";
+    const isMatch = bcrypt.compareSync(password, admin?.passwordHash ?? DUMMY_HASH);
+    if (!admin || !isMatch) {
       return { success: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة." };
     }
 

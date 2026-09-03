@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Amiri, Cormorant_Garamond, IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
@@ -34,13 +34,19 @@ const notoArabic = Noto_Sans_Arabic({
   preload: false,
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   title: {
-    default: "FATEKIT — متجر المكياج الفاخر والعناية بالبشرة",
+    default: "FATEKIT — متجر براندات المكياج العالمية",
     template: "%s | FATEKIT",
   },
-  description: "علامة تجارية فلسطينية فاخرة للمكياج والعناية بالبشرة، صممت خصيصاً لإبراز تميزكِ وإطلالتكِ الاستثنائية. الدفع نقداً عند الاستلام (COD) مع توصيل سريع لكافة المدن.",
-  keywords: ["مكياج", "تجميل", "مكياج فاخر", "FATEKIT", "عناية بالبشرة", "أحمر شفاه", "فاونديشن", "فلسطين", "الدفع عند الاستلام"],
+  description: "متجر فلسطيني يختار لكِ براندات المكياج والعناية العالمية الأصلية. توصيل سريع والدفع نقداً عند الاستلام لجميع المدن.",
+  keywords: ["مكياج", "تجميل", "براندات مكياج", "FATEKIT", "عناية بالبشرة", "أحمر شفاه", "فاونديشن", "فلسطين", "الدفع عند الاستلام"],
   authors: [{ name: "FATEKIT" }],
   creator: "FATEKIT",
   icons: {
@@ -52,14 +58,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ar_AR",
     url: "https://fatekit.com",
-    title: "FATEKIT — متجر المكياج الفاخر والعناية بالبشرة",
-    description: "مكياج فاخر مصمم ليمنحكِ إطلالة لا تُنسى بأعلى معايير الجودة والفخامة.",
+    title: "FATEKIT — متجر براندات المكياج العالمية",
+    description: "براندات مكياج وعناية عالمية مختارة، بتوصيل داخل فلسطين والدفع عند الاستلام.",
     siteName: "FATEKIT",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FATEKIT — متجر المكياج الفاخر والعناية بالبشرة",
-    description: "مكياج فاخر مصمم ليمنحكِ إطلالة لا تُنسى بأعلى معايير الجودة والفخامة.",
+    title: "FATEKIT — متجر براندات المكياج العالمية",
+    description: "براندات مكياج وعناية عالمية مختارة، بتوصيل داخل فلسطين والدفع عند الاستلام.",
   },
 };
 

@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const imageUrl = product.images[0]?.url || "https://picsum.photos/seed/placeholder/800/800";
-  const desc = product.description || `اشتري ${product.name} من FATEKIT بسعر ${Number(product.price).toFixed(2)} ₪. دفع عند الاستلام لجميع المدن.`;
+  const desc = product.description || `اشتري ${product.name}${product.brand ? ` من ${product.brand}` : ""} من متجر FATEKIT بسعر ${Number(product.price).toFixed(2)} ₪. دفع عند الاستلام لجميع المدن.`;
 
   return {
     title: product.name,

@@ -33,17 +33,20 @@ export default async function StoreLayout({
           <CartDrawer />
           <div className="flex-1">{children}</div>
 
-          <footer className="bg-espresso text-ivory pt-16 md:pt-20 pb-10 mt-16 md:mt-20">
-            <div className="store-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-14 text-center sm:text-right">
-              <div className="space-y-4">
-                <h3 className="font-logo text-2xl font-semibold tracking-[0.22em]">{settings.storeName}</h3>
-                <p className="text-sm text-ivory/65 leading-relaxed max-w-xs sm:max-w-none mx-auto sm:mx-0">
-                  علامة فلسطينية للمكياج والعناية بالبشرة، صُممت لتبرز تميّزكِ بإطلالة ناعمة وواثقة.
+          <footer className="bg-espresso text-ivory pt-8 sm:pt-12 md:pt-16 pb-[max(1.25rem,env(safe-area-inset-bottom))] mt-8 sm:mt-12 md:mt-16">
+            <div className="store-container grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-6 md:gap-8 lg:gap-12 text-right">
+              <div className="col-span-2 md:col-span-1 space-y-2">
+                <h3 className="font-logo text-xl sm:text-2xl font-semibold tracking-[0.18em] sm:tracking-[0.22em]">{settings.storeName}</h3>
+                <p className="text-xs sm:text-sm text-ivory/65 leading-relaxed max-w-sm">
+                  متجر فلسطيني لمكياج وعناية من براندات عالمية مختارة، مع توصيل والدفع عند الاستلام.
                 </p>
+                <Link href="/about" className="inline-block text-xs text-champagne hover:text-ivory transition-colors">
+                  تعرّفي على المتجر
+                </Link>
               </div>
               <div>
-                <h4 className="text-xs tracking-wide font-semibold mb-4 text-champagne">التصنيفات</h4>
-                <ul className="space-y-2.5 text-sm text-ivory/70">
+                <h4 className="text-[11px] sm:text-xs tracking-wide font-semibold mb-2.5 sm:mb-4 text-champagne">التصنيفات</h4>
+                <ul className="space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-ivory/70">
                   {categories.map((c) => (
                     <li key={c.id}>
                       <Link href={`/shop/${c.slug}`} className="hover:text-ivory transition-colors duration-200">
@@ -54,25 +57,30 @@ export default async function StoreLayout({
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs tracking-wide font-semibold mb-4 text-champagne">خدمة العميلات</h4>
-                <ul className="space-y-2.5 text-sm text-ivory/70">
+                <h4 className="text-[11px] sm:text-xs tracking-wide font-semibold mb-2.5 sm:mb-4 text-champagne">خدمة العميلات</h4>
+                <ul className="space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-ivory/70">
+                  <li>
+                    <Link href="/about" className="hover:text-ivory transition-colors duration-200">
+                      عن المتجر
+                    </Link>
+                  </li>
                   <li>الشحن والتوصيل</li>
                   <li>الدفع عند الاستلام</li>
                   <li>سياسة الخصوصية</li>
                   <li>الشروط والأحكام</li>
                 </ul>
               </div>
-              <div>
-                <h4 className="text-xs tracking-wide font-semibold mb-4 text-champagne">تواصلي معنا</h4>
-                <p className="text-sm text-ivory/70 mb-3 leading-relaxed">خدمة العميلات عبر واتساب طوال أيام الأسبوع</p>
-                <p className="text-sm font-semibold text-ivory dir-ltr sm:text-right">{settings.whatsapp || settings.phone}</p>
+              <div className="col-span-2 md:col-span-1">
+                <h4 className="text-[11px] sm:text-xs tracking-wide font-semibold mb-2.5 sm:mb-4 text-champagne">تواصلي معنا</h4>
+                <p className="text-xs sm:text-sm text-ivory/70 mb-2 leading-relaxed">خدمة العميلات عبر واتساب طوال أيام الأسبوع</p>
+                <p className="text-xs sm:text-sm font-semibold text-ivory dir-ltr">{settings.whatsapp || settings.phone}</p>
                 {settings.email ? (
-                  <p className="text-xs text-ivory/50 mt-2 dir-ltr sm:text-right">{settings.email}</p>
+                  <p className="text-[11px] text-ivory/50 mt-1.5 dir-ltr">{settings.email}</p>
                 ) : null}
               </div>
             </div>
 
-            <div className="store-container mt-14 pt-8 border-t border-white/10 text-center text-xs text-ivory/40 space-y-2">
+            <div className="store-container mt-7 sm:mt-10 pt-5 border-t border-white/10 text-center text-[11px] sm:text-xs text-ivory/40 space-y-1">
               <p>© {new Date().getFullYear()} {settings.storeName}. جميع الحقوق محفوظة.</p>
               <p>
                 <Link href="/admin/login" className="hover:text-ivory/70">

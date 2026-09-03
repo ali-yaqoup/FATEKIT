@@ -6,7 +6,8 @@
     "dev": "next dev -p 3000 -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "admin:set-password": "npx tsx --env-file=.env scripts/set-admin-password.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

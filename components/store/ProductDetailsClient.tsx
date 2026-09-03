@@ -105,22 +105,22 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
     <div className="bg-background text-on-background min-h-screen">
       <main className="store-container py-10 md:py-16 lg:py-20">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs font-sans text-neutral-500 mb-10">
-          <Link href="/" className="hover:text-black transition">
+        <nav className="flex items-center gap-2 text-xs font-sans text-neutral-500 mb-6 sm:mb-10 min-w-0">
+          <Link href="/" className="hover:text-black transition shrink-0">
             الرئيسية
           </Link>
-          <ChevronLeft className="w-3.5 h-3.5" />
-          <Link href={`/shop/${product.category.slug}`} className="hover:text-black transition">
+          <ChevronLeft className="w-3.5 h-3.5 shrink-0" />
+          <Link href={`/shop/${product.category.slug}`} className="hover:text-black transition shrink-0">
             {product.category.name}
           </Link>
-          <ChevronLeft className="w-3.5 h-3.5" />
-          <span className="text-black font-medium">{product.name}</span>
+          <ChevronLeft className="w-3.5 h-3.5 shrink-0" />
+          <span className="text-black font-medium truncate">{product.name}</span>
         </nav>
 
         {/* Product Grid Layout matching fatekit_4 */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-16">
           {/* Gallery Column (Desktop: 7 cols) */}
-          <div className="md:col-span-7 flex flex-col md:flex-row gap-4 h-[500px] md:h-[700px]">
+          <div className="md:col-span-7 flex flex-col md:flex-row gap-4 h-[min(68vw,26rem)] sm:h-[28rem] md:h-[640px] lg:h-[700px]">
             {/* Thumbnails list */}
             {images.length > 1 && (
               <div className="hidden md:flex flex-col gap-3 w-24 h-full overflow-y-auto pr-1">
@@ -164,9 +164,14 @@ export function ProductDetailsClient({ product }: ProductDetailsProps) {
           <div className="md:col-span-5 flex flex-col justify-start pt-2 md:pt-6">
             {/* Title & Brand */}
             <div className="mb-4">
-              <span className="text-xs uppercase font-semibold text-neutral-500 tracking-wider">
-                {product.brand || "FATEKIT"}
-              </span>
+              {product.brand ? (
+                <Link
+                  href={`/shop?brand=${encodeURIComponent(product.brand)}`}
+                  className="text-xs uppercase font-semibold text-neutral-500 tracking-wider hover:text-secondary transition-colors"
+                >
+                  {product.brand}
+                </Link>
+              ) : null}
               <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mt-1 text-primary leading-[1.15] tracking-tight">
                 {product.name}
               </h1>

@@ -3,6 +3,36 @@ import { ChevronRight, ChevronLeft, Filter, X } from "lucide-react";
 import { db } from "@/lib/db";
 import { SortSelect } from "@/components/store/SortSelect";
 import { ProductCard } from "@/components/store/ProductCard";
+import { getActiveBrands } from "@/lib/brands";
+
+function shopHref({
+  category,
+  brand,
+  search,
+  sort,
+  page,
+  minPrice,
+  maxPrice,
+}: {
+  category?: string;
+  brand?: string;
+  search?: string;
+  sort?: string;
+  page?: number;
+  minPrice?: number;
+  maxPrice?: number;
+}) {
+  const path = category ? `/shop/${category}` : "/shop";
+  const query = new URLSearchParams();
+  if (brand) query.set("brand", brand);
+  if (search) query.set("search", search);
+  if (sort && sort !== "newest") query.set("sort", sort);
+  if (page && page > 1) query.set("page", String(page));
+  if (minPrice != null && !Number.isNaN(minPrice)) query.set("minPrice", String(minPrice));
+  if (maxPrice != null && !Number.isNaN(maxPrice)) query.set("maxPrice", String(maxPrice));
+  const qs = query.toString();
+  return qs ? `${path}?${qs}` : path;
+}
 
 
 interface ShopPageProps {
@@ -26,6 +56,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const currentPage = parseInt(params.page || "1", 10);
   const pageSize = 12;
   const searchQuery = params.search;
+  const selectedBrand = params.brand?.trim() || undefined;
 
   // 1. Fetch categories
   const categories = await db.category.findMany({
@@ -63,6 +94,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   }
 
   // Add search filter
+  if (selectedBrand) {
+    where.brand = { equals: selectedBrand, mode: "insensitive" };
+  }
+
   if (searchQuery && searchQuery.trim()) {
     where.OR = [
       { name: { contains: searchQuery, mode: "insensitive" } },
@@ -80,30 +115,38 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   // 4. Query total count & paginated products
   const totalCount = await db.product.count({ where });
 
-  const products = await db.product.findMany({
-    where,
-    orderBy,
-    skip: (currentPage - 1) * pageSize,
-    take: pageSize,
-    include: {
-      category: true,
-      images: { orderBy: { sortOrder: "asc" } },
-    },
-  });
+  const [products, brands] = await Promise.all([
+    db.product.findMany({
+      where,
+      orderBy,
+      skip: (currentPage - 1) * pageSize,
+      take: pageSize,
+      include: {
+        category: true,
+        images: { orderBy: { sortOrder: "asc" } },
+      },
+    }),
+    getActiveBrands(),
+  ]);
 
   const totalPages = Math.ceil(totalCount / pageSize) || 1;
 
-  // Selected Category Title
   const activeCategoryObj = categories.find((c) => c.slug === selectedCategorySlug);
-  const pageTitle = activeCategoryObj ? activeCategoryObj.name : (searchQuery ? `نتائج البحث: "${searchQuery}"` : "المكياج");
+  const pageTitle = activeCategoryObj
+    ? activeCategoryObj.name
+    : selectedBrand
+      ? selectedBrand
+      : searchQuery
+        ? `نتائج البحث: "${searchQuery}"`
+        : "المكياج";
 
   return (
     <div className="bg-background text-on-background min-h-screen">
       <div className="bg-blush/40 border-b border-outline-variant/70">
-        <div className="store-container py-12 md:py-16 text-center">
+        <div className="store-container py-8 sm:py-12 md:py-16 text-center">
           <div className="max-w-3xl mx-auto space-y-3">
             <p className="store-label">المتجر</p>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-primary">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-primary">
               {pageTitle}
             </h1>
             <nav className="flex justify-center items-center gap-3 font-sans text-xs text-on-surface-variant">
@@ -117,11 +160,66 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         </div>
       </div>
 
-      <div className="store-container py-16 md:py-20">
-        <div className="flex flex-col lg:flex-row gap-12">
+      <div className="store-container py-8 sm:py-12 md:py-20">
+        <div className="lg:hidden space-y-3 mb-2">
+          <div className="flex overflow-x-auto no-scrollbar gap-2 -mx-4 px-4">
+            <Link
+              href={shopHref({ brand: selectedBrand, search: searchQuery, sort })}
+              className={`shrink-0 px-3.5 py-1.5 rounded-full border text-xs font-medium transition-colors ${
+                !selectedCategorySlug
+                  ? "bg-primary text-ivory border-primary"
+                  : "bg-ivory text-primary/80 border-outline-variant"
+              }`}
+            >
+              الكل
+            </Link>
+            {parentCategories.map((parent) => (
+              <Link
+                key={parent.id}
+                href={shopHref({ category: parent.slug, brand: selectedBrand, search: searchQuery, sort })}
+                className={`shrink-0 px-3.5 py-1.5 rounded-full border text-xs font-medium whitespace-nowrap transition-colors ${
+                  selectedCategorySlug === parent.slug
+                    ? "bg-primary text-ivory border-primary"
+                    : "bg-ivory text-primary/80 border-outline-variant"
+                }`}
+              >
+                {parent.name}
+              </Link>
+            ))}
+          </div>
+          {brands.length > 0 ? (
+            <div className="flex overflow-x-auto no-scrollbar gap-2 -mx-4 px-4 pb-1">
+              <Link
+                href={shopHref({ category: selectedCategorySlug, search: searchQuery, sort })}
+                className={`shrink-0 px-3.5 py-1.5 rounded-full border text-xs font-medium transition-colors ${
+                  !selectedBrand
+                    ? "bg-secondary text-white border-secondary"
+                    : "bg-ivory text-primary/80 border-outline-variant"
+                }`}
+              >
+                كل البراندات
+              </Link>
+              {brands.map((brand) => (
+                <Link
+                  key={brand}
+                  href={shopHref({ category: selectedCategorySlug, brand, search: searchQuery, sort })}
+                  className={`shrink-0 px-3.5 py-1.5 rounded-full border text-xs font-medium whitespace-nowrap transition-colors ${
+                    selectedBrand?.toLowerCase() === brand.toLowerCase()
+                      ? "bg-secondary text-white border-secondary"
+                      : "bg-ivory text-primary/80 border-outline-variant"
+                  }`}
+                >
+                  {brand}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Premium Sidebar Filters */}
-          <aside className="w-full lg:w-72 flex-shrink-0">
-            <div className="sticky top-32 space-y-10">
+          <aside className="hidden lg:block w-full lg:w-72 flex-shrink-0">
+            <div className="sticky top-24 space-y-10">
               {/* Category Filter */}
               <div className="border-b border-neutral-200/60 pb-8">
                 <div className="flex items-center justify-between mb-6">
@@ -133,7 +231,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 <ul className="space-y-4 font-sans text-sm">
                   <li>
                     <Link
-                      href={`/shop${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`}
+                      href={shopHref({ brand: selectedBrand, search: searchQuery, sort })}
                       className={`block hover:text-primary transition-all duration-300 group ${
                         !selectedCategorySlug ? "font-semibold text-primary" : "text-neutral-600"
                       }`}
@@ -149,7 +247,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   {parentCategories.map((parent) => (
                     <li key={parent.id} className="space-y-3">
                       <Link
-                        href={`/shop/${parent.slug}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`}
+                        href={shopHref({ category: parent.slug, brand: selectedBrand, search: searchQuery, sort })}
                         className={`block hover:text-primary transition-all duration-300 group ${
                           selectedCategorySlug === parent.slug ? "font-semibold text-primary" : "text-neutral-600"
                         }`}
@@ -166,7 +264,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                           {parent.children.map((child) => (
                             <li key={child.id}>
                               <Link
-                                href={`/shop/${child.slug}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ""}`}
+                                href={shopHref({ category: child.slug, brand: selectedBrand, search: searchQuery, sort })}
                                 className={`hover:text-primary transition-all duration-300 ${
                                   selectedCategorySlug === child.slug ? "font-semibold text-primary" : "text-neutral-500"
                                 }`}
@@ -182,16 +280,43 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 </ul>
               </div>
 
-              {/* Brand Filter */}
               <div className="border-b border-neutral-200/60 pb-8">
                 <h3 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">
                   الماركة
                 </h3>
                 <ul className="space-y-4 font-sans text-sm">
-                  <li className="font-semibold text-primary flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-champagne" />
-                    FATEKIT (الكل)
+                  <li>
+                    <Link
+                      href={shopHref({ category: selectedCategorySlug, search: searchQuery, sort, minPrice, maxPrice })}
+                      className={`block hover:text-primary transition-all duration-300 ${
+                        !selectedBrand ? "font-semibold text-primary" : "text-neutral-600"
+                      }`}
+                    >
+                      <span className="flex items-center justify-between">
+                        <span>كل البراندات</span>
+                        {!selectedBrand ? <span className="w-1.5 h-1.5 rounded-full bg-champagne" /> : null}
+                      </span>
+                    </Link>
                   </li>
+                  {brands.map((brand) => (
+                    <li key={brand}>
+                      <Link
+                        href={shopHref({ category: selectedCategorySlug, brand, search: searchQuery, sort, minPrice, maxPrice })}
+                        className={`block hover:text-primary transition-all duration-300 ${
+                          selectedBrand?.toLowerCase() === brand.toLowerCase()
+                            ? "font-semibold text-primary"
+                            : "text-neutral-600"
+                        }`}
+                      >
+                        <span className="flex items-center justify-between">
+                          <span>{brand}</span>
+                          {selectedBrand?.toLowerCase() === brand.toLowerCase() ? (
+                            <span className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                          ) : null}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -206,6 +331,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   )}
                   {searchQuery && (
                     <input type="hidden" name="search" value={searchQuery} />
+                  )}
+                  {selectedBrand && (
+                    <input type="hidden" name="brand" value={selectedBrand} />
                   )}
                   <div className="flex items-center gap-3">
                     <div className="flex-1">
@@ -268,7 +396,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
             {/* Premium Product Grid */}
             {products.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-5 sm:gap-y-10">
                 {products.map((product) => (
                   <div key={product.id}>
                     <ProductCard
@@ -316,7 +444,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               <div className="mt-20 flex justify-center items-center gap-3 border-t border-neutral-200/60 pt-10">
                 {currentPage > 1 && (
                   <Link
-                    href={`/shop?page=${currentPage - 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ""}`}
+                    href={shopHref({ category: selectedCategorySlug, brand: selectedBrand, search: searchQuery, sort, page: currentPage - 1, minPrice, maxPrice })}
                     className="w-12 h-12 border border-neutral-300 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 rounded-sm"
                     aria-label="الصفحة السابقة"
                   >
@@ -327,7 +455,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <Link
                     key={pageNum}
-                    href={`/shop?page=${pageNum}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ""}`}
+                    href={shopHref({ category: selectedCategorySlug, brand: selectedBrand, search: searchQuery, sort, page: pageNum, minPrice, maxPrice })}
                     className={`w-12 h-12 border flex items-center justify-center font-sans text-xs font-bold transition-all duration-300 rounded-sm ${
                       pageNum === currentPage
                         ? "border-primary bg-primary text-white shadow-lg"
@@ -340,7 +468,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
                 {currentPage < totalPages && (
                   <Link
-                    href={`/shop?page=${currentPage + 1}${selectedCategorySlug ? `&category=${selectedCategorySlug}` : ""}${sort ? `&sort=${sort}` : ""}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ""}`}
+                    href={shopHref({ category: selectedCategorySlug, brand: selectedBrand, search: searchQuery, sort, page: currentPage + 1, minPrice, maxPrice })}
                     className="w-12 h-12 border border-neutral-300 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 rounded-sm"
                     aria-label="الصفحة التالية"
                   >

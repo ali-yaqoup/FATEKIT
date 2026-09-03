@@ -36,10 +36,10 @@ export function MobileNav({ categories }: { categories: CategoryLink[] }) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="p-2 -mr-1 text-primary/80 hover:text-secondary transition-colors duration-200"
+        className="store-header-action -mr-1"
         aria-label="فتح القائمة"
       >
-        <Menu className="w-6 h-6" strokeWidth={1.5} />
+        <Menu className="store-header-icon" strokeWidth={1.5} />
       </button>
 
       {isOpen ? (
@@ -50,11 +50,11 @@ export function MobileNav({ categories }: { categories: CategoryLink[] }) {
             aria-hidden="true"
           />
           <nav
-            className="absolute inset-y-0 right-0 w-[min(100%,340px)] bg-ivory text-primary shadow-drawer flex flex-col animate-slide-in-right"
+            className="absolute inset-y-0 right-0 w-[min(100%,320px)] max-w-[86vw] bg-ivory text-primary shadow-drawer flex flex-col animate-slide-in-right pt-[env(safe-area-inset-top)]"
             aria-label="قائمة التنقل"
           >
-            <div className="flex items-center justify-between px-6 h-[4.25rem] border-b border-outline-variant">
-              <span className="font-logo text-xl font-semibold tracking-[0.25em]">FATEKIT</span>
+            <div className="flex items-center justify-between px-5 store-header-bar border-b border-outline-variant">
+              <span className="store-logo">FATEKIT</span>
               <button
                 type="button"
                 onClick={close}
@@ -71,6 +71,9 @@ export function MobileNav({ categories }: { categories: CategoryLink[] }) {
               </MobileNavLink>
               <MobileNavLink href="/shop" onClick={close}>
                 المتجر الكامل
+              </MobileNavLink>
+              <MobileNavLink href="/about" onClick={close}>
+                عن المتجر
               </MobileNavLink>
               <div className="pt-6 pb-2 px-3">
                 <span className="store-label">التصنيفات</span>

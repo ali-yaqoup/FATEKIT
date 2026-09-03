@@ -166,7 +166,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="bg-background text-on-background min-h-screen">
-      <main className="max-w-container mx-auto px-6 md:px-16 py-12 md:py-20">
+      <main className="store-container py-8 sm:py-12 md:py-20">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 text-xs font-sans text-neutral-500 mb-6">
@@ -179,7 +179,7 @@ export default function CheckoutPage() {
         </div>
 
         <div className="mb-10">
-          <h1 className="font-serif text-3xl md:text-5xl font-bold mb-2 text-black">إتمام الطلب</h1>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-black">إتمام الطلب</h1>
           <p className="text-sm font-sans text-neutral-600">
             يرجى إدخال تفاصيل الشحن والتواصل. الدفع نقداً عند استلام الطلب فقط (COD).
           </p>

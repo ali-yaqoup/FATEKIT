@@ -24,29 +24,99 @@ async function uniqueProductSlug(base: string, excludeId?: string) {
   }
 }
 
+function uniqueConstraintTarget(error: unknown): unknown {
+  if (!error || typeof error !== "object" || !("meta" in error)) return undefined;
+  return (error as { meta?: { target?: unknown } }).meta?.target;
+}
+
+function uniqueConstraintCode(error: unknown): string | undefined {
+  if (!error || typeof error !== "object" || !("code" in error)) return undefined;
+  return (error as { code?: string }).code;
+}
+
+function uniqueConstraintMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (error && typeof error === "object" && "message" in error) {
+    return String((error as { message?: unknown }).message ?? "");
+  }
+  return "";
+}
+
+function targetIncludesField(target: unknown, field: string) {
+  const needle = field.toLowerCase();
+  if (Array.isArray(target)) {
+    return target.some((item) => String(item).toLowerCase().includes(needle));
+  }
+  if (typeof target === "string") return target.toLowerCase().includes(needle);
+  return false;
+}
+
 function isUniqueConstraint(error: unknown, field: string) {
-  if (!error || typeof error !== "object" || !("code" in error)) return false;
-  if ((error as { code?: string }).code !== "P2002") return false;
-  const target = (error as { meta?: { target?: string[] } }).meta?.target ?? [];
-  return target.includes(field);
+  const message = uniqueConstraintMessage(error);
+  const target = uniqueConstraintTarget(error);
+  const isP2002 = uniqueConstraintCode(error) === "P2002";
+  const mentionsUnique =
+    isP2002 || message.includes("Unique constraint") || message.includes("القيد الفريد");
+  if (!mentionsUnique) return false;
+  if (targetIncludesField(target, field)) return true;
+  return (
+    message.includes(`('${field}')`) ||
+    message.includes(`'${field}'`) ||
+    message.includes(`\`${field}\``)
+  );
 }
 
 function toSaveError(error: unknown): Error {
+  if (error instanceof Error && !isUniqueConstraint(error, "sku") && !isUniqueConstraint(error, "slug")) {
+    if (
+      !error.message.startsWith("Invalid `prisma.") &&
+      !error.message.includes("prisma.product") &&
+      !error.message.startsWith("استدعاء 'prisma.")
+    ) {
+      return error;
+    }
+  }
   if (isUniqueConstraint(error, "sku")) {
-    return new Error("كود المنتج (SKU) مستخدم مسبقاً. غيّريه أو اتركيه فارغ.");
+    return new Error(
+      "كود المنتج (SKU) مستخدم مسبقاً. اختاري كوداً آخر أو اتركيه فارغاً ليتم توليده تلقائياً."
+    );
   }
   if (isUniqueConstraint(error, "slug")) {
     return new Error("يوجد منتج بنفس الاسم. غيّري الاسم قليلاً.");
   }
-  if (error instanceof Error && !error.message.startsWith("Invalid `prisma.")) {
-    return error;
-  }
   return new Error("تعذر حفظ المنتج. حاول مرة أخرى.");
 }
 
-async function findProductBySku(sku: string | null) {
-  if (!sku) return null;
-  return db.product.findUnique({ where: { sku } });
+async function skuIsTaken(sku: string, excludeId?: string) {
+  const existing = await db.product.findFirst({
+    where: {
+      sku: { equals: sku, mode: "insensitive" },
+      ...(excludeId ? { NOT: { id: excludeId } } : {}),
+    },
+  });
+  return Boolean(existing);
+}
+
+async function uniqueGeneratedSku(excludeId?: string) {
+  for (let attempt = 0; attempt < 12; attempt++) {
+    const sku = `FK-${Date.now().toString(36).toUpperCase()}-${Math.random()
+      .toString(36)
+      .slice(2, 6)
+      .toUpperCase()}`;
+    if (!(await skuIsTaken(sku, excludeId))) return sku;
+  }
+  throw new Error("تعذر توليد كود منتج فريد. حاولي مرة أخرى.");
+}
+
+async function resolveProductSku(raw: string, excludeId?: string) {
+  const sku = raw.trim();
+  if (!sku) return uniqueGeneratedSku(excludeId);
+  if (await skuIsTaken(sku, excludeId)) {
+    throw new Error(
+      "كود المنتج (SKU) مستخدم مسبقاً. اختاري كوداً آخر أو اتركيه فارغاً ليتم توليده تلقائياً."
+    );
+  }
+  return sku;
 }
 
 export async function updateProductQuickAction(id: string, price: number, quantity: number) {
@@ -146,10 +216,11 @@ export async function saveProductAction(input: {
       : null;
 
   try {
-    const sku = input.sku.trim() || null;
+    const requestedSku = input.sku.trim();
+    const sku = await resolveProductSku(requestedSku, input.id);
     const data = {
       name,
-      brand: input.brand.trim() || "FATEKIT",
+      brand: input.brand.trim() || null,
       categoryId: input.categoryId,
       price: input.price,
       compareAtPrice,
@@ -169,22 +240,12 @@ export async function saveProductAction(input: {
     let productId = input.id;
 
     if (productId) {
-      const skuOwner = await findProductBySku(sku);
-      if (skuOwner && skuOwner.id !== productId) {
-        throw new Error("كود المنتج (SKU) مستخدم مسبقاً. غيّريه أو اتركيه فارغ.");
-      }
       await db.product.update({
         where: { id: productId },
         data,
       });
     } else {
-      const skuOwner = await findProductBySku(sku);
-      if (skuOwner && skuOwner.name === name) {
-        productId = skuOwner.id;
-        await db.product.update({ where: { id: productId }, data });
-      } else if (skuOwner) {
-        throw new Error("كود المنتج (SKU) مستخدم مسبقاً. غيّريه أو اتركيه فارغ.");
-      } else {
+      try {
         const created = await db.product.create({
           data: {
             ...data,
@@ -192,6 +253,19 @@ export async function saveProductAction(input: {
           },
         });
         productId = created.id;
+      } catch (error) {
+        if (!requestedSku && isUniqueConstraint(error, "sku")) {
+          const created = await db.product.create({
+            data: {
+              ...data,
+              sku: await uniqueGeneratedSku(),
+              slug: await uniqueProductSlug(name),
+            },
+          });
+          productId = created.id;
+        } else {
+          throw error;
+        }
       }
     }
 
